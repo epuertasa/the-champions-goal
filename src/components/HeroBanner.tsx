@@ -14,19 +14,6 @@ const HeroBanner = () => (
     <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background" />
 
     <div className="relative z-10 text-center px-6">
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="flex items-center justify-center gap-3 mb-6"
-      >
-        <Flame className="h-5 w-5 text-neon" />
-        <span className="font-heading text-sm uppercase tracking-[0.3em] text-silver">
-          UCL Elite Hub
-        </span>
-        <Flame className="h-5 w-5 text-neon" />
-      </motion.div>
-
       <motion.h1
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
