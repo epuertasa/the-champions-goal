@@ -22,7 +22,15 @@ const HeroBanner = () => (
       >
         The Champions
         <br />
-        <span className="neon-text">Goal</span>
+        <span
+          className="neon-text"
+          style={{
+            textShadow:
+              "0 1px 0 hsl(var(--neon-blue) / 0.6), 0 2px 0 hsl(var(--neon-blue) / 0.5), 0 4px 0 hsl(var(--neon-blue) / 0.4), 0 6px 0 hsl(var(--neon-blue) / 0.3), 0 10px 20px hsl(0 0% 0% / 0.7), 0 0 30px hsl(var(--neon-blue) / 0.9), 0 0 60px hsl(var(--neon-blue) / 0.5)",
+          }}
+        >
+          Goal
+        </span>
       </motion.h1>
 
       <motion.p
