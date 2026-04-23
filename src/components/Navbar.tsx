@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Trophy, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import uclLogo from "@/assets/ucl-logo.png";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -17,8 +18,8 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card rounded-none border-x-0 border-t-0">
       <div className="container mx-auto flex items-center justify-between px-6 py-3">
         <a href="#home" className="flex items-center gap-2">
-          <Trophy className="h-6 w-6 text-neon" />
-          <span className="font-heading text-lg uppercase tracking-wider text-silver-bright">
+          <img src={uclLogo} alt="UCL logo" className="h-7 w-7 drop-shadow-[0_2px_8px_hsl(var(--neon-blue)/0.7)]" />
+          <span className="font-display text-xl uppercase tracking-wider text-silver-bright">
             Champions Goal
           </span>
         </a>

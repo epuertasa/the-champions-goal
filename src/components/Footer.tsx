@@ -1,10 +1,10 @@
-import { Trophy } from "lucide-react";
+import uclLogo from "@/assets/ucl-logo.png";
 
 const Footer = () => (
   <footer className="py-12 px-6 border-t border-border">
     <div className="container mx-auto text-center">
-      <Trophy className="h-6 w-6 text-neon mx-auto mb-3" />
-      <p className="font-heading text-sm uppercase tracking-widest text-silver">
+      <img src={uclLogo} alt="UCL logo" className="h-10 w-10 mx-auto mb-3 drop-shadow-[0_4px_12px_hsl(var(--neon-blue)/0.6)]" />
+      <p className="font-display text-base uppercase tracking-widest text-silver-bright">
         The Champions Goal
       </p>
       <p className="mt-2 text-xs text-muted-foreground font-body">

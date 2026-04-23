@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
+import { Flame, Trophy } from "lucide-react";
 import heroBg from "@/assets/hero-banner.jpg";
+import uclLogo from "@/assets/ucl-logo.png";
 
 const HeroBanner = () => (
   <section id="home" className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
@@ -20,22 +21,31 @@ const HeroBanner = () => (
         transition={{ duration: 0.8 }}
         className="flex items-center justify-center gap-3 mb-6"
       >
-        <Star className="h-5 w-5 text-neon" />
+        <Flame className="h-5 w-5 text-neon" />
         <span className="font-heading text-sm uppercase tracking-[0.3em] text-silver">
           UCL Elite Hub
         </span>
-        <Star className="h-5 w-5 text-neon" />
+        <Flame className="h-5 w-5 text-neon" />
       </motion.div>
+
+      <motion.img
+        src={uclLogo}
+        alt="UEFA Champions League logo"
+        initial={{ opacity: 0, scale: 0.7, rotateY: -30 }}
+        animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+        transition={{ duration: 1, delay: 0.1 }}
+        className="mx-auto mb-6 h-28 w-28 sm:h-36 sm:w-36 drop-shadow-[0_10px_30px_hsl(var(--neon-blue)/0.6)]"
+      />
 
       <motion.h1
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
-        className="font-heading text-5xl sm:text-7xl md:text-8xl uppercase tracking-tight text-silver-bright leading-none"
+        className="font-display text-6xl sm:text-8xl md:text-9xl uppercase tracking-wide text-silver-bright leading-[0.9] text-3d"
       >
         The Champions
         <br />
-        <span className="neon-text">Goal</span>
+        <span className="text-3d-neon">Goal</span>
       </motion.h1>
 
       <motion.p
@@ -55,9 +65,9 @@ const HeroBanner = () => (
       >
         <a
           href="#video-intro"
-          className="inline-block px-8 py-3 font-heading text-sm uppercase tracking-widest text-primary-foreground bg-primary rounded-lg neon-border animate-glow-pulse hover:scale-105 transition-transform"
+          className="inline-flex items-center gap-2 px-8 py-3 font-heading text-sm uppercase tracking-widest text-primary-foreground bg-primary rounded-lg neon-border animate-glow-pulse hover:scale-105 transition-transform"
         >
-          Explore Now
+          <Trophy className="h-4 w-4" /> Explore Now
         </a>
       </motion.div>
     </div>
