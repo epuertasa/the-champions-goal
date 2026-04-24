@@ -21,7 +21,7 @@ const SectionHeader = ({ icon: Icon, label, title }: Props) => (
         {label}
       </span>
     </div>
-    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl uppercase tracking-wide text-silver-bright text-3d">
+    <h2 className="font-display text-4xl sm:text-5xl md:text-6xl uppercase tracking-[0.04em] text-silver-bright text-3d">
       {title}
     </h2>
     <div className="section-divider mt-6 mx-auto max-w-xs" />
