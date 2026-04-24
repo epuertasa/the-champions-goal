@@ -55,7 +55,7 @@ const goals = [
     competition: "UCL Quarterfinal 2018",
     description:
       "A breathtaking bicycle kick in Turin that left the Juventus crowd applauding. One of the most iconic goals of the modern era.",
-    videoId: "Y5Sz9hBYHwV",
+    videoId: "Wb3uPzM2y04",
   },
 ];
 
