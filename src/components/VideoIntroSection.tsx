@@ -15,15 +15,7 @@ const VideoIntroSection = () => (
           transition={{ duration: 0.6 }}
           className="md:col-span-2 glass-card neon-border overflow-hidden"
         >
-          <div className="aspect-video">
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="UCL Video Introduction"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
-          </div>
+          <div className="aspect-video bg-navy-deep/60" />
         </motion.div>
 
         <motion.div
