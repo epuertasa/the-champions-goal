@@ -7,54 +7,54 @@ const goals = [
     player: "Zinedine Zidane",
     club: "Real Madrid",
     match: "vs Bayer Leverkusen",
-    competition: "Final UCL 2002",
+    competition: "UCL Final 2002",
     description:
-      "Volea imposible con la pierna izquierda desde el borde del área. Considerado por muchos el mejor gol en la historia de una final.",
+      "Impossible left-footed volley from the edge of the box. Widely regarded as the greatest goal ever scored in a Champions League final.",
     videoId: "Pone3FsCMOM",
   },
   {
     player: "Lionel Messi",
     club: "FC Barcelona",
     match: "vs Real Madrid",
-    competition: "Semifinal UCL 2011",
+    competition: "UCL Semifinal 2011",
     description:
-      "Slalom desde el centro del campo, regateando a media defensa blanca antes de definir con frialdad ante Casillas.",
+      "A mesmerising slalom from midfield, slicing through half of the Madrid defence before coolly slotting it past Casillas.",
     videoId: "RmF9hgkvW_U",
   },
   {
     player: "Cristiano Ronaldo",
     club: "Real Madrid",
     match: "vs Juventus",
-    competition: "Cuartos UCL 2018",
+    competition: "UCL Quarterfinal 2018",
     description:
-      "Chilena espectacular a casi tres metros de altura. Hasta el Juventus Stadium se levantó a aplaudirle.",
+      "A breathtaking bicycle kick almost three metres in the air. Even the Juventus Stadium rose to its feet to applaud him.",
     videoId: "Pn5DvD9NFoo",
   },
   {
     player: "Steven Gerrard",
     club: "Liverpool",
     match: "vs AC Milan",
-    competition: "Final UCL 2005",
+    competition: "UCL Final 2005",
     description:
-      "Cabezazo que inició la remontada más épica de la historia: el milagro de Estambul tras ir 3-0 abajo.",
+      "The header that sparked the most epic comeback in history: the Miracle of Istanbul after trailing 3-0 at half-time.",
     videoId: "tF5UTJ9YchE",
   },
   {
     player: "Dejan Stankovic",
-    club: "Inter de Milán",
+    club: "Inter Milan",
     match: "vs Schalke 04",
-    competition: "Cuartos UCL 2011",
+    competition: "UCL Quarterfinal 2011",
     description:
-      "Volea de primeras desde fuera del área a los 25 segundos del partido. Uno de los goles más rápidos de la competición.",
+      "A first-time volley from outside the box just 25 seconds into the match. One of the fastest goals in the competition's history.",
     videoId: "ApwUYscyJBs",
   },
   {
     player: "Roberto Carlos",
     club: "Real Madrid",
     match: "vs Manchester United",
-    competition: "Cuartos UCL 2003",
+    competition: "UCL Quarterfinal 2003",
     description:
-      "Volea de exterior con la zurda dentro del área. Pura magia brasileña en Old Trafford.",
+      "An outside-of-the-boot left-footed volley inside the box. Pure Brazilian magic at Old Trafford.",
     videoId: "1Sz9hBYHwVI",
   },
 ];
