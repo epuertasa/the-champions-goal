@@ -16,7 +16,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 glass-card rounded-none border-x-0 border-t-0">
-      <div className="container mx-auto flex items-center justify-between px-6 py-3">
+      <div className="w-full flex items-center justify-between px-6 py-3">
         <a href="#home" className="flex items-center gap-2">
           <img src={uclLogo} alt="UCL logo" className="h-7 w-7 drop-shadow-[0_2px_8px_hsl(var(--neon-blue)/0.7)]" />
           <span className="font-display text-xl uppercase tracking-wider text-silver-bright">
