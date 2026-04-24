@@ -19,7 +19,7 @@ const goals = [
     competition: "UCL Semifinal 2011",
     description:
       "A mesmerising slalom from midfield, slicing through half of the Madrid defence before coolly slotting it past Casillas.",
-    videoId: "RmF9hgkvW_U",
+    videoId: "8fFP9Rp3yxE",
   },
   {
     player: "Cristiano Ronaldo",
