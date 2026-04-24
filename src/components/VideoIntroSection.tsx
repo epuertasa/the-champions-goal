@@ -5,7 +5,7 @@ import SectionHeader from "./SectionHeader";
 const VideoIntroSection = () => (
   <section id="video-intro" className="py-24 px-6">
     <div className="container mx-auto">
-      <SectionHeader icon={Video} label="Post 1" title="The Kick-Off" />
+      <SectionHeader icon={Video} label="Video Introduction" title="The Kick-Off" />
 
       <div className="grid md:grid-cols-3 gap-8">
         <motion.div
