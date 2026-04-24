@@ -8,6 +8,7 @@ const navLinks = [
   { label: "Video Intro", href: "#video-intro" },
   { label: "Best Goals", href: "#best-goals" },
   { label: "Top Scorers", href: "#top-scorers" },
+  { label: "Winners", href: "#winners" },
 ];
 
 const Navbar = () => {
