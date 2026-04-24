@@ -49,13 +49,13 @@ const goals = [
     videoId: "ApwUYscyJBs",
   },
   {
-    player: "Roberto Carlos",
+    player: "Cristiano Ronaldo",
     club: "Real Madrid",
-    match: "vs Manchester United",
-    competition: "UCL Quarterfinal 2003",
+    match: "vs Juventus",
+    competition: "UCL Quarterfinal 2018",
     description:
-      "An outside-of-the-boot left-footed volley inside the box. Pure Brazilian magic at Old Trafford.",
-    videoId: "1Sz9hBYHwVI",
+      "A breathtaking bicycle kick in Turin that left the Juventus crowd applauding. One of the most iconic goals of the modern era.",
+    videoId: "Wb3uPzM2y04",
   },
 ];
 
