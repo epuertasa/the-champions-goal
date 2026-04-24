@@ -10,6 +10,7 @@ const goals = [
     competition: "Final UCL 2002",
     description:
       "Volea imposible con la pierna izquierda desde el borde del área. Considerado por muchos el mejor gol en la historia de una final.",
+    videoId: "Pone3FsCMOM",
   },
   {
     player: "Lionel Messi",
@@ -18,6 +19,7 @@ const goals = [
     competition: "Semifinal UCL 2011",
     description:
       "Slalom desde el centro del campo, regateando a media defensa blanca antes de definir con frialdad ante Casillas.",
+    videoId: "RmF9hgkvW_U",
   },
   {
     player: "Cristiano Ronaldo",
@@ -26,6 +28,7 @@ const goals = [
     competition: "Cuartos UCL 2018",
     description:
       "Chilena espectacular a casi tres metros de altura. Hasta el Juventus Stadium se levantó a aplaudirle.",
+    videoId: "Pn5DvD9NFoo",
   },
   {
     player: "Steven Gerrard",
@@ -34,6 +37,7 @@ const goals = [
     competition: "Final UCL 2005",
     description:
       "Cabezazo que inició la remontada más épica de la historia: el milagro de Estambul tras ir 3-0 abajo.",
+    videoId: "tF5UTJ9YchE",
   },
   {
     player: "Dejan Stankovic",
@@ -42,6 +46,7 @@ const goals = [
     competition: "Cuartos UCL 2011",
     description:
       "Volea de primeras desde fuera del área a los 25 segundos del partido. Uno de los goles más rápidos de la competición.",
+    videoId: "ApwUYscyJBs",
   },
   {
     player: "Roberto Carlos",
@@ -50,6 +55,7 @@ const goals = [
     competition: "Cuartos UCL 2003",
     description:
       "Volea de exterior con la zurda dentro del área. Pura magia brasileña en Old Trafford.",
+    videoId: "1Sz9hBYHwVI",
   },
 ];
 
@@ -72,6 +78,17 @@ const BestGoalsSection = () => (
             transition={{ duration: 0.5, delay: index * 0.08 }}
             className="glass-card neon-border p-6 flex flex-col group hover:-translate-y-1 transition-transform"
           >
+            <div className="aspect-video w-full overflow-hidden rounded-lg border border-glass-border mb-5 bg-navy-deep/60">
+              <iframe
+                src={`https://www.youtube.com/embed/${goal.videoId}`}
+                title={`${goal.player} — ${goal.competition}`}
+                loading="lazy"
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+                className="h-full w-full"
+              />
+            </div>
+
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <Trophy className="h-4 w-4 text-neon" />
