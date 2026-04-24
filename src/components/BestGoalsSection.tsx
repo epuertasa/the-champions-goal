@@ -10,7 +10,7 @@ const goals = [
     competition: "UCL Final 2002",
     description:
       "Impossible left-footed volley from the edge of the box. Widely regarded as the greatest goal ever scored in a Champions League final.",
-    videoId: "6dRBdHQEFcM",
+    videoId: "I-a-uIQhSBU",
   },
   {
     player: "Lionel Messi",
