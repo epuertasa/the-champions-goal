@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import HeroBanner from "@/components/HeroBanner";
 import VideoIntroSection from "@/components/VideoIntroSection";
 import BestGoalsSection from "@/components/BestGoalsSection";
+import TopScorersSection from "@/components/TopScorersSection";
 import Footer from "@/components/Footer";
 
 const Index = () => (
@@ -10,6 +11,7 @@ const Index = () => (
     <HeroBanner />
     <VideoIntroSection />
     <BestGoalsSection />
+    <TopScorersSection />
     <Footer />
   </div>
 );
