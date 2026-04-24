@@ -6,9 +6,8 @@ import uclLogo from "@/assets/ucl-logo.png";
 const navLinks = [
   { label: "Home", href: "#home" },
   { label: "Video Intro", href: "#video-intro" },
-  { label: "Opinion", href: "#opinion" },
-  { label: "Legends", href: "#legends" },
-  { label: "Fan Zone", href: "#fan-zone" },
+  { label: "Best Goals", href: "#best-goals" },
+  { label: "Top Scorers", href: "#top-scorers" },
 ];
 
 const Navbar = () => {
