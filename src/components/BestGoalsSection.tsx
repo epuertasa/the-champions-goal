@@ -37,7 +37,7 @@ const goals = [
     competition: "UCL Final 2005",
     description:
       "The header that sparked the most epic comeback in history: the Miracle of Istanbul after trailing 3-0 at half-time.",
-    videoId: "tF5UTJ9YchE",
+    videoId: "jP-PEKe3LTc",
   },
   {
     player: "Dejan Stankovic",
