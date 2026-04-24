@@ -22,13 +22,13 @@ const goals = [
     videoId: "8fFP9Rp3yxE",
   },
   {
-    player: "Cristiano Ronaldo",
+    player: "Gareth Bale",
     club: "Real Madrid",
-    match: "vs Juventus",
-    competition: "UCL Quarterfinal 2018",
+    match: "vs Liverpool",
+    competition: "UCL Final 2018",
     description:
-      "A breathtaking bicycle kick almost three metres in the air. Even the Juventus Stadium rose to its feet to applaud him.",
-    videoId: "Pn5DvD9NFoo",
+      "A jaw-dropping bicycle kick just minutes after coming off the bench. The goal that sealed Real Madrid's third consecutive Champions League title in Kyiv.",
+    videoId: "jZs6awC7r4s",
   },
   {
     player: "Steven Gerrard",
