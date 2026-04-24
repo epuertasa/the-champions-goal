@@ -46,7 +46,7 @@ const goals = [
     competition: "UCL Quarterfinal 2011",
     description:
       "A first-time volley from outside the box just 25 seconds into the match. One of the fastest goals in the competition's history.",
-    videoId: "ApwUYscyJBs",
+    videoId: "nRQRyrg7Xxw",
   },
   {
     player: "Cristiano Ronaldo",
