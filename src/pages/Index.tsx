@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import HeroBanner from "@/components/HeroBanner";
 import VideoIntroSection from "@/components/VideoIntroSection";
+import BestGoalsSection from "@/components/BestGoalsSection";
 import Footer from "@/components/Footer";
 
 const Index = () => (
@@ -8,6 +9,7 @@ const Index = () => (
     <Navbar />
     <HeroBanner />
     <VideoIntroSection />
+    <BestGoalsSection />
     <Footer />
   </div>
 );
