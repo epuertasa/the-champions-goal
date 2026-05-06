@@ -1,27 +1,7 @@
 import { motion } from "framer-motion";
-import { Crown, Timer, Flame, Star } from "lucide-react";
+import { Crown } from "lucide-react";
 import SectionHeader from "./SectionHeader";
-
-const facts = [
-  {
-    icon: Timer,
-    stat: "10.12s",
-    title: "Fastest UCL Goal",
-    text: "Roy Makaay struck against Real Madrid in 2007 — barely ten seconds in.",
-  },
-  {
-    icon: Flame,
-    stat: "140",
-    title: "All-Time Top Scorer",
-    text: "Cristiano Ronaldo's record may stand for generations to come.",
-  },
-  {
-    icon: Star,
-    stat: "3 in a row",
-    title: "Madrid's Dynasty",
-    text: "Zidane's Real Madrid lifted the trophy from 2016 to 2018 — unmatched in the modern era.",
-  },
-];
+import uclLegends from "@/assets/ucl-legends.png";
 
 const LegendsSection = () => (
   <section id="legends" className="py-24 px-6">
@@ -71,30 +51,30 @@ const LegendsSection = () => (
         </div>
       </motion.div>
 
-      <div className="grid sm:grid-cols-3 gap-6">
-        {facts.map((f, i) => (
-          <motion.div
-            key={f.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="glass-card neon-border p-8 flex flex-col items-center text-center hover:-translate-y-1 transition-transform"
-          >
-            <f.icon className="h-8 w-8 text-neon mb-4" />
-            <span className="font-display text-5xl text-silver-bright text-3d-neon leading-none">
-              {f.stat}
-            </span>
-            <h4 className="font-heading text-sm uppercase tracking-[0.25em] text-neon mt-4">
-              {f.title}
-            </h4>
-            <div className="section-divider my-4" />
-            <p className="font-body text-sm text-silver leading-relaxed">
-              {f.text}
-            </p>
-          </motion.div>
-        ))}
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className="glass-card neon-border overflow-hidden max-w-5xl mx-auto"
+      >
+        <img
+          src={uclLegends}
+          alt="Most remembered UCL legends: Raúl, Messi, Lewandowski, Cristiano Ronaldo and Shevchenko"
+          className="w-full h-auto block"
+          loading="lazy"
+        />
+        <div className="p-6 text-center">
+          <h4 className="font-heading text-sm uppercase tracking-[0.25em] text-neon">
+            The Most Remembered Faces of the UCL
+          </h4>
+          <div className="section-divider my-4" />
+          <p className="font-body text-sm text-silver leading-relaxed">
+            Raúl, Messi, Lewandowski, Cristiano Ronaldo and Shevchenko — five
+            icons whose nights under the European lights became eternal.
+          </p>
+        </div>
+      </motion.div>
     </div>
   </section>
 );
