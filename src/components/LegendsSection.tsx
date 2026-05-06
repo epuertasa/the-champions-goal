@@ -1,14 +1,26 @@
 import { motion } from "framer-motion";
-import { Crown } from "lucide-react";
+import { Crown, Timer, Flame, Star } from "lucide-react";
 import SectionHeader from "./SectionHeader";
-import legend1 from "@/assets/ucl-legend-1.jpg";
-import legend2 from "@/assets/ucl-legend-2.jpg";
-import legend3 from "@/assets/ucl-legend-3.jpg";
 
-const images = [
-  { src: legend1, alt: "Incredible bicycle kick", watermark: "Erik's Edition" },
-  { src: legend2, alt: "Trophy celebration", watermark: "Alex's Edition" },
-  { src: legend3, alt: "Packed stadium final", watermark: "Luis's Edition" },
+const facts = [
+  {
+    icon: Timer,
+    stat: "10.12s",
+    title: "Fastest UCL Goal",
+    text: "Roy Makaay struck against Real Madrid in 2007 — barely ten seconds in.",
+  },
+  {
+    icon: Flame,
+    stat: "140",
+    title: "All-Time Top Scorer",
+    text: "Cristiano Ronaldo's record may stand for generations to come.",
+  },
+  {
+    icon: Star,
+    stat: "3 in a row",
+    title: "Madrid's Dynasty",
+    text: "Zidane's Real Madrid lifted the trophy from 2016 to 2018 — unmatched in the modern era.",
+  },
 ];
 
 const LegendsSection = () => (
@@ -60,24 +72,26 @@ const LegendsSection = () => (
       </motion.div>
 
       <div className="grid sm:grid-cols-3 gap-6">
-        {images.map((img, i) => (
+        {facts.map((f, i) => (
           <motion.div
-            key={img.watermark}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            key={f.title}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="relative glass-card overflow-hidden group"
+            className="glass-card neon-border p-8 flex flex-col items-center text-center hover:-translate-y-1 transition-transform"
           >
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              width={800}
-              height={600}
-              className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <span className="watermark">{img.watermark}</span>
+            <f.icon className="h-8 w-8 text-neon mb-4" />
+            <span className="font-display text-5xl text-silver-bright text-3d-neon leading-none">
+              {f.stat}
+            </span>
+            <h4 className="font-heading text-sm uppercase tracking-[0.25em] text-neon mt-4">
+              {f.title}
+            </h4>
+            <div className="section-divider my-4" />
+            <p className="font-body text-sm text-silver leading-relaxed">
+              {f.text}
+            </p>
           </motion.div>
         ))}
       </div>
