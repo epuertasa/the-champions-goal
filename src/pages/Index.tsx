@@ -20,6 +20,11 @@ const Index = () => (
       subtitle="A journey through every European king — from 1956 to today."
     />
     <WinnersSection />
+    <SectionBanner
+      label="Coming Up · Post 4"
+      title="Fan Zone & Activities"
+      subtitle="Test your UCL knowledge with games, puzzles and challenges made by Erik, Àlex & Luis."
+    />
     <Footer />
   </div>
 );
