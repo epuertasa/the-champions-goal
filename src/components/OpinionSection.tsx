@@ -1,15 +1,6 @@
 import { motion } from "framer-motion";
 import { PenLine } from "lucide-react";
 import SectionHeader from "./SectionHeader";
-import uclMatch1 from "@/assets/ucl-match-1.jpg";
-import uclMatch2 from "@/assets/ucl-match-2.jpg";
-import uclMatch3 from "@/assets/ucl-match-3.jpg";
-
-const images = [
-  { src: uclMatch1, alt: "UCL stadium aerial view", watermark: "Erik's Edition" },
-  { src: uclMatch2, alt: "Player celebration", watermark: "Alex's Edition" },
-  { src: uclMatch3, alt: "Champions League football", watermark: "Luis's Edition" },
-];
 
 const OpinionSection = () => (
   <section id="opinion" className="py-24 px-6">
@@ -53,29 +44,6 @@ const OpinionSection = () => (
           </p>
         </div>
       </motion.div>
-
-      <div className="grid sm:grid-cols-3 gap-6">
-        {images.map((img, i) => (
-          <motion.div
-            key={img.watermark}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: i * 0.15 }}
-            className="relative glass-card overflow-hidden group"
-          >
-            <img
-              src={img.src}
-              alt={img.alt}
-              loading="lazy"
-              width={800}
-              height={600}
-              className="w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            <span className="watermark">{img.watermark}</span>
-          </motion.div>
-        ))}
-      </div>
     </div>
   </section>
 );
