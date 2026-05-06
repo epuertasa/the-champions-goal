@@ -128,13 +128,6 @@ const WordSearchSection = () => {
     setIsDragging(false);
   };
 
-  const reveal = (word: string) =>
-    setFound((prev) => {
-      const next = new Set(prev);
-      next.has(word) ? next.delete(word) : next.add(word);
-      return next;
-    });
-
   const reset = () => {
     setFound(new Set());
     setFoundCells(new Set());
