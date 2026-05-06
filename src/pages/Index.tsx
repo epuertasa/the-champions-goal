@@ -7,6 +7,7 @@ import WinnersSection from "@/components/WinnersSection";
 import OpinionSection from "@/components/OpinionSection";
 import LegendsSection from "@/components/LegendsSection";
 import FanZoneSection from "@/components/FanZoneSection";
+import WordSearchSection from "@/components/WordSearchSection";
 import SectionBanner from "@/components/SectionBanner";
 import Footer from "@/components/Footer";
 
@@ -41,6 +42,12 @@ const Index = () => (
       subtitle="Test your UCL knowledge with games, puzzles and challenges made by Erik, Àlex & Luis."
     />
     <FanZoneSection />
+    <SectionBanner
+      label="Activity · Post 4"
+      title="Player Word Search"
+      subtitle="Find ten Champions League legends hidden in the grid."
+    />
+    <WordSearchSection />
     <Footer />
   </div>
 );
