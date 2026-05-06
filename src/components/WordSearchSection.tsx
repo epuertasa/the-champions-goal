@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Search, RotateCcw } from "lucide-react";
 import SectionHeader from "./SectionHeader";
@@ -80,6 +80,53 @@ const WordSearchSection = () => {
   const [seed, setSeed] = useState(0);
   const { grid, placed } = useMemo(() => buildGrid(), [seed]);
   const [found, setFound] = useState<Set<string>>(new Set());
+  const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
+  const [start, setStart] = useState<[number, number] | null>(null);
+  const [current, setCurrent] = useState<[number, number] | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  const lineCells = useCallback((a: [number, number], b: [number, number]): [number, number][] | null => {
+    const [r1, c1] = a;
+    const [r2, c2] = b;
+    const dr = r2 - r1;
+    const dc = c2 - c1;
+    const len = Math.max(Math.abs(dr), Math.abs(dc)) + 1;
+    if (dr !== 0 && dc !== 0 && Math.abs(dr) !== Math.abs(dc)) return null;
+    const sr = dr === 0 ? 0 : dr / Math.abs(dr);
+    const sc = dc === 0 ? 0 : dc / Math.abs(dc);
+    const cells: [number, number][] = [];
+    for (let i = 0; i < len; i++) cells.push([r1 + sr * i, c1 + sc * i]);
+    return cells;
+  }, []);
+
+  const selection = useMemo(() => {
+    if (!start || !current) return [] as [number, number][];
+    return lineCells(start, current) ?? [];
+  }, [start, current, lineCells]);
+
+  const selectionSet = useMemo(
+    () => new Set(selection.map(([r, c]) => `${r}-${c}`)),
+    [selection]
+  );
+
+  const finishSelection = () => {
+    if (selection.length > 1) {
+      const word = selection.map(([r, c]) => grid[r][c].letter).join("");
+      const reversed = word.split("").reverse().join("");
+      const match = placed.find((w) => w === word || w === reversed);
+      if (match && !found.has(match)) {
+        setFound((p) => new Set(p).add(match));
+        setFoundCells((p) => {
+          const next = new Set(p);
+          selection.forEach(([r, c]) => next.add(`${r}-${c}`));
+          return next;
+        });
+      }
+    }
+    setStart(null);
+    setCurrent(null);
+    setIsDragging(false);
+  };
 
   const reveal = (word: string) =>
     setFound((prev) => {
@@ -90,6 +137,9 @@ const WordSearchSection = () => {
 
   const reset = () => {
     setFound(new Set());
+    setFoundCells(new Set());
+    setStart(null);
+    setCurrent(null);
     setSeed((s) => s + 1);
   };
 
@@ -108,19 +158,49 @@ const WordSearchSection = () => {
             className="glass-card neon-border p-4 sm:p-6 mx-auto"
           >
             <div
-              className="grid gap-[2px] sm:gap-1 select-none"
+              className="grid gap-[2px] sm:gap-1 select-none touch-none"
               style={{ gridTemplateColumns: `repeat(${SIZE}, minmax(0, 1fr))` }}
+              onMouseLeave={() => isDragging && finishSelection()}
+              onMouseUp={finishSelection}
+              onTouchEnd={finishSelection}
             >
               {grid.map((row, r) =>
                 row.map((cell, c) => {
-                  const isFound = [...cell.words].some((w) => found.has(w));
+                  const key = `${r}-${c}`;
+                  const isFound = foundCells.has(key);
+                  const isSelected = selectionSet.has(key);
                   return (
                     <div
-                      key={`${r}-${c}`}
-                      className={`aspect-square flex items-center justify-center font-heading text-[0.65rem] sm:text-sm uppercase tracking-wider rounded-sm border transition-colors ${
+                      key={key}
+                      onMouseDown={(e) => {
+                        e.preventDefault();
+                        setIsDragging(true);
+                        setStart([r, c]);
+                        setCurrent([r, c]);
+                      }}
+                      onMouseEnter={() => isDragging && setCurrent([r, c])}
+                      onTouchStart={(e) => {
+                        e.preventDefault();
+                        setIsDragging(true);
+                        setStart([r, c]);
+                        setCurrent([r, c]);
+                      }}
+                      onTouchMove={(e) => {
+                        const t = e.touches[0];
+                        const el = document.elementFromPoint(t.clientX, t.clientY) as HTMLElement | null;
+                        const k = el?.dataset?.cell;
+                        if (k) {
+                          const [rr, cc] = k.split("-").map(Number);
+                          setCurrent([rr, cc]);
+                        }
+                      }}
+                      data-cell={key}
+                      className={`aspect-square flex items-center justify-center font-heading text-[0.65rem] sm:text-sm uppercase tracking-wider rounded-sm border transition-colors cursor-pointer ${
                         isFound
-                          ? "bg-neon/20 border-neon text-neon text-3d-neon"
-                          : "bg-background/40 border-border/40 text-silver"
+                          ? "bg-neon/30 border-neon text-neon text-3d-neon"
+                          : isSelected
+                          ? "bg-neon/40 border-neon text-background"
+                          : "bg-background/40 border-border/40 text-silver hover:border-neon/40"
                       }`}
                     >
                       {cell.letter}
@@ -143,21 +223,20 @@ const WordSearchSection = () => {
               Find these legends
             </h3>
             <p className="font-body text-sm text-silver/80 mb-6">
-              Words run horizontally, vertically, diagonally — forwards and backwards. Click a name to mark it as found.
+              Click and drag across the grid to select letters. Words run horizontally, vertically and diagonally — forwards and backwards.
             </p>
             <div className="grid grid-cols-2 gap-2 mb-6">
               {placed.map((w) => (
-                <button
+                <div
                   key={w}
-                  onClick={() => reveal(w)}
                   className={`text-left font-heading text-sm uppercase tracking-wider px-3 py-2 rounded border transition-all ${
                     found.has(w)
                       ? "border-neon text-neon bg-neon/10 line-through"
-                      : "border-border/50 text-silver-bright hover:border-neon/60 hover:text-neon"
+                      : "border-border/50 text-silver-bright"
                   }`}
                 >
                   {w}
-                </button>
+                </div>
               ))}
             </div>
             <button
