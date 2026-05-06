@@ -1,49 +1,112 @@
 import { useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
-import { Search, RotateCcw } from "lucide-react";
+import { Search, RotateCcw, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
 
-const PLAYERS = [
-  "MESSI",
-  "RONALDO",
-  "RAUL",
-  "ZIDANE",
-  "BENZEMA",
-  "LEWANDOWSKI",
-  "SHEVCHENKO",
-  "MBAPPE",
-  "HALAND",
-  "MODRIC",
-];
-
-const SIZE = 14;
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 type Cell = { letter: string; words: Set<string> };
 
-const directions = [
-  [0, 1],   // →
-  [1, 0],   // ↓
-  [1, 1],   // ↘
-  [-1, 1],  // ↗
-  [0, -1],  // ←
-  [-1, 0],  // ↑
+const DIR_BASIC: [number, number][] = [
+  [0, 1],
+  [1, 0],
+];
+const DIR_DIAG: [number, number][] = [
+  [0, 1],
+  [1, 0],
+  [1, 1],
+  [-1, 1],
+];
+const DIR_ALL: [number, number][] = [
+  [0, 1],
+  [1, 0],
+  [1, 1],
+  [-1, 1],
+  [0, -1],
+  [-1, 0],
+  [-1, -1],
+  [1, -1],
 ];
 
-function buildGrid(): { grid: Cell[][]; placed: string[] } {
-  const grid: Cell[][] = Array.from({ length: SIZE }, () =>
-    Array.from({ length: SIZE }, () => ({ letter: "", words: new Set<string>() }))
+type Level = {
+  id: string;
+  label: string;
+  size: number;
+  words: string[];
+  directions: [number, number][];
+  description: string;
+};
+
+const LEVELS: Level[] = [
+  {
+    id: "easy",
+    label: "Easy",
+    size: 9,
+    words: ["MESSI", "RAUL", "KAKA", "PELE", "OWEN"],
+    directions: DIR_BASIC,
+    description: "Short names, only horizontal & vertical.",
+  },
+  {
+    id: "medium",
+    label: "Medium",
+    size: 12,
+    words: ["RONALDO", "ZIDANE", "MBAPPE", "MODRIC", "BALE", "SUAREZ", "INIESTA"],
+    directions: DIR_DIAG,
+    description: "Diagonals appear, forwards only.",
+  },
+  {
+    id: "hard",
+    label: "Hard",
+    size: 14,
+    words: [
+      "BENZEMA",
+      "LEWANDOWSKI",
+      "SHEVCHENKO",
+      "MALDINI",
+      "XAVI",
+      "INIESTA",
+      "NEUER",
+      "HAALAND",
+    ],
+    directions: DIR_ALL,
+    description: "All 8 directions — forwards & backwards.",
+  },
+  {
+    id: "expert",
+    label: "Expert",
+    size: 16,
+    words: [
+      "CRISTIANO",
+      "RONALDINHO",
+      "LEWANDOWSKI",
+      "SHEVCHENKO",
+      "VAN BASTEN".replace(" ", ""),
+      "BUFFON",
+      "CASILLAS",
+      "RAMOS",
+      "PUYOL",
+      "DROGBA",
+    ],
+    directions: DIR_ALL,
+    description: "Bigger grid, longer names, every direction.",
+  },
+];
+
+function buildGrid(level: Level): { grid: Cell[][]; placed: string[] } {
+  const { size, words, directions } = level;
+  const grid: Cell[][] = Array.from({ length: size }, () =>
+    Array.from({ length: size }, () => ({ letter: "", words: new Set<string>() }))
   );
   const placed: string[] = [];
 
   const tryPlace = (word: string) => {
-    for (let attempt = 0; attempt < 200; attempt++) {
+    for (let attempt = 0; attempt < 300; attempt++) {
       const [dr, dc] = directions[Math.floor(Math.random() * directions.length)];
-      const r = Math.floor(Math.random() * SIZE);
-      const c = Math.floor(Math.random() * SIZE);
+      const r = Math.floor(Math.random() * size);
+      const c = Math.floor(Math.random() * size);
       const endR = r + dr * (word.length - 1);
       const endC = c + dc * (word.length - 1);
-      if (endR < 0 || endR >= SIZE || endC < 0 || endC >= SIZE) continue;
+      if (endR < 0 || endR >= size || endC < 0 || endC >= size) continue;
       let ok = true;
       for (let i = 0; i < word.length; i++) {
         const cell = grid[r + dr * i][c + dc * i];
@@ -64,10 +127,10 @@ function buildGrid(): { grid: Cell[][]; placed: string[] } {
     return false;
   };
 
-  for (const w of PLAYERS) tryPlace(w);
+  for (const w of words) tryPlace(w);
 
-  for (let r = 0; r < SIZE; r++) {
-    for (let c = 0; c < SIZE; c++) {
+  for (let r = 0; r < size; r++) {
+    for (let c = 0; c < size; c++) {
       if (!grid[r][c].letter) {
         grid[r][c].letter = LETTERS[Math.floor(Math.random() * LETTERS.length)];
       }
@@ -77,8 +140,10 @@ function buildGrid(): { grid: Cell[][]; placed: string[] } {
 }
 
 const WordSearchSection = () => {
+  const [levelId, setLevelId] = useState<string>(LEVELS[0].id);
+  const level = LEVELS.find((l) => l.id === levelId)!;
   const [seed, setSeed] = useState(0);
-  const { grid, placed } = useMemo(() => buildGrid(), [seed]);
+  const { grid, placed } = useMemo(() => buildGrid(level), [seed, level]);
   const [found, setFound] = useState<Set<string>>(new Set());
   const [foundCells, setFoundCells] = useState<Set<string>>(new Set());
   const [start, setStart] = useState<[number, number] | null>(null);
@@ -136,23 +201,51 @@ const WordSearchSection = () => {
     setSeed((s) => s + 1);
   };
 
+  const switchLevel = (id: string) => {
+    setLevelId(id);
+    setFound(new Set());
+    setFoundCells(new Set());
+    setStart(null);
+    setCurrent(null);
+    setSeed((s) => s + 1);
+  };
+
   return (
     <section id="wordsearch" className="py-24 px-6">
       <div className="container mx-auto">
         <SectionHeader icon={Search} label="Activity · Post 4" title="Player Word Search" />
 
+        <div className="flex flex-wrap justify-center gap-2 mb-10">
+          {LEVELS.map((l) => (
+            <button
+              key={l.id}
+              onClick={() => switchLevel(l.id)}
+              className={`font-heading text-xs uppercase tracking-[0.25em] px-4 py-2 rounded border transition-all ${
+                l.id === levelId
+                  ? "border-neon text-neon bg-neon/10"
+                  : "border-border/50 text-silver-bright hover:border-neon/60 hover:text-neon"
+              }`}
+            >
+              {l.label}
+            </button>
+          ))}
+        </div>
+
         <div className="grid lg:grid-cols-[auto,1fr] gap-10 items-start max-w-6xl mx-auto">
           {/* Grid */}
           <motion.div
+            key={level.id}
             initial={{ opacity: 0, scale: 0.96 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.6 }}
             className="glass-card neon-border p-4 sm:p-6 mx-auto"
           >
             <div
               className="grid gap-[2px] sm:gap-1 select-none touch-none"
-              style={{ gridTemplateColumns: `repeat(${SIZE}, minmax(0, 1fr))` }}
+              style={{
+                gridTemplateColumns: `repeat(${level.size}, minmax(0, 1fr))`,
+                width: `min(${level.size * 2.4}rem, 90vw)`,
+              }}
               onMouseLeave={() => isDragging && finishSelection()}
               onMouseUp={finishSelection}
               onTouchEnd={finishSelection}
@@ -213,10 +306,10 @@ const WordSearchSection = () => {
             className="glass-card p-6 sm:p-8"
           >
             <h3 className="font-heading text-lg uppercase tracking-[0.25em] text-neon mb-2">
-              Find these legends
+              {level.label} · Find these legends
             </h3>
             <p className="font-body text-sm text-silver/80 mb-6">
-              Click and drag across the grid to select letters. Words run horizontally, vertically and diagonally — forwards and backwards.
+              {level.description} Click and drag across the grid to select letters.
             </p>
             <div className="grid grid-cols-2 gap-2 mb-6">
               {placed.map((w) => (
@@ -241,9 +334,16 @@ const WordSearchSection = () => {
             </button>
 
             <div className="section-divider my-6" />
-            <p className="font-body text-xs text-silver/70">
-              Progress: <span className="text-neon">{found.size}</span> / {placed.length}
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="font-body text-xs text-silver/70">
+                Progress: <span className="text-neon">{found.size}</span> / {placed.length}
+              </p>
+              {found.size === placed.length && placed.length > 0 && (
+                <span className="inline-flex items-center gap-1 font-heading text-xs uppercase tracking-[0.25em] text-neon">
+                  <Trophy className="h-4 w-4" /> Solved
+                </span>
+              )}
+            </div>
           </motion.div>
         </div>
       </div>
