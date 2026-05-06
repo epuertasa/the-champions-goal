@@ -4,6 +4,7 @@ import VideoIntroSection from "@/components/VideoIntroSection";
 import BestGoalsSection from "@/components/BestGoalsSection";
 import TopScorersSection from "@/components/TopScorersSection";
 import WinnersSection from "@/components/WinnersSection";
+import SectionBanner from "@/components/SectionBanner";
 import Footer from "@/components/Footer";
 
 const Index = () => (
@@ -13,6 +14,11 @@ const Index = () => (
     <VideoIntroSection />
     <BestGoalsSection />
     <TopScorersSection />
+    <SectionBanner
+      label="Next Chapter"
+      title="The Hall Of Champions"
+      subtitle="A journey through every European king — from 1956 to today."
+    />
     <WinnersSection />
     <Footer />
   </div>
