@@ -9,6 +9,9 @@ const navLinks = [
   { label: "Best Goals", href: "#best-goals" },
   { label: "Top Scorers", href: "#top-scorers" },
   { label: "Winners", href: "#winners" },
+  { label: "Opinion", href: "#opinion" },
+  { label: "Choice", href: "#legends" },
+  { label: "Fan Zone", href: "#fan-zone" },
 ];
 
 const Navbar = () => {
