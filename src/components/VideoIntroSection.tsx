@@ -34,7 +34,7 @@ const VideoIntroSection = () => (
           <p className="font-body text-sm leading-relaxed text-silver flex-1">
             Welcome to <strong className="text-silver-bright">The Champions Goal</strong> — a
             blog created by <strong className="text-neon">Erik Puertas</strong>,{" "}
-            <strong className="text-neon">Alex Molina</strong>, and{" "}
+            <strong className="text-neon">Àlex Molina</strong>, and{" "}
             <strong className="text-neon">Luis De La Rosa</strong>. As students with
             a passion for football and Strategic Media &amp; Research (SMR), we built
             this platform to celebrate the most prestigious club competition in

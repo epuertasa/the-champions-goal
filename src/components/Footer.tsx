@@ -5,7 +5,7 @@ const Footer = () => (
         The Champions Goal
       </p>
       <p className="mt-2 text-xs text-muted-foreground font-body">
-        © 2026 Erik Puertas, Alex Molina &amp; Luis De La Rosa. All rights reserved.
+        © 2026 Erik Puertas, Àlex Molina &amp; Luis De La Rosa. All rights reserved.
       </p>
     </div>
   </footer>
