@@ -1,6 +1,30 @@
 import { motion } from "framer-motion";
 import { PenLine } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+import coachGuardiola from "@/assets/coach-guardiola.jpg";
+import coachKlopp from "@/assets/coach-klopp.jpg";
+import coachAncelotti from "@/assets/coach-ancelotti.jpg";
+
+const coaches = [
+  {
+    src: coachGuardiola,
+    name: "Pep Guardiola",
+    title: "The Architect",
+    quote: "Redefined possession football and high pressing — winner with Barcelona & Manchester City.",
+  },
+  {
+    src: coachKlopp,
+    name: "Jürgen Klopp",
+    title: "Heavy Metal Football",
+    quote: "Turned Liverpool into European royalty again with relentless intensity and gegenpressing.",
+  },
+  {
+    src: coachAncelotti,
+    name: "Carlo Ancelotti",
+    title: "Mr. Champions League",
+    quote: "Five UCL titles. The calmest mind in the dugout — a record-breaking European master.",
+  },
+];
 
 const OpinionSection = () => (
   <section id="opinion" className="py-24 px-6">
@@ -44,6 +68,44 @@ const OpinionSection = () => (
           </p>
         </div>
       </motion.div>
+
+      <div className="grid sm:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        {coaches.map((c, i) => (
+          <motion.article
+            key={c.name}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: i * 0.15 }}
+            className="group relative glass-card neon-border overflow-hidden"
+          >
+            <div className="relative aspect-[4/5] overflow-hidden">
+              <img
+                src={c.src}
+                alt={`${c.name} — ${c.title}`}
+                loading="lazy"
+                width={1024}
+                height={1280}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 right-0 p-5">
+                <p className="font-heading text-[0.65rem] uppercase tracking-[0.3em] text-neon mb-1">
+                  {c.title}
+                </p>
+                <h4 className="font-display text-2xl text-silver-bright leading-tight">
+                  {c.name}
+                </h4>
+              </div>
+            </div>
+            <div className="p-5">
+              <p className="font-body text-sm text-silver leading-relaxed">
+                {c.quote}
+              </p>
+            </div>
+          </motion.article>
+        ))}
+      </div>
     </div>
   </section>
 );
