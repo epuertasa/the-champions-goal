@@ -27,7 +27,7 @@ const OtherCompetitionsSection = () => (
         whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.7 }}
-        className="bg-silver-bright/95 rounded-xl p-8 md:p-10 mb-16 max-w-3xl mx-auto shadow-2xl"
+        className="rounded-xl overflow-hidden mb-16 max-w-4xl mx-auto shadow-2xl neon-border"
       >
         <img
           src={competitions}
@@ -35,9 +35,6 @@ const OtherCompetitionsSection = () => (
           className="w-full h-auto block"
           loading="lazy"
         />
-        <p className="font-heading text-[10px] md:text-xs uppercase tracking-[0.3em] text-background/70 text-center mt-6">
-          The three official UEFA club competitions
-        </p>
       </motion.div>
 
       <p className="font-body text-base text-silver leading-relaxed max-w-3xl mx-auto text-center mb-12">
