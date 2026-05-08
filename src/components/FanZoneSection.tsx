@@ -301,27 +301,93 @@ const FanZoneSection = () => {
             viewport={{ once: true }}
             className="glass-card p-6 flex flex-col"
           >
-            <div className="flex items-center gap-2 mb-4">
-              <Eye className="h-5 w-5 text-neon" />
-              <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
-                Spot the Difference
-              </h3>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Eye className="h-5 w-5 text-neon" />
+                <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
+                  Spot the Difference
+                </h3>
+              </div>
+              <div className="flex items-center gap-3 font-heading text-xs uppercase tracking-wider">
+                <span className="text-silver">
+                  Found: <span className="text-neon">{foundDiffs.length}</span>/10
+                </span>
+                <button
+                  onClick={resetDiffs}
+                  className="px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors text-[10px]"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
             <p className="font-body text-xs text-silver mb-4">
-              Compare the two stadium images below. Can you find the hidden differences?
+              Click on the right image to find the 10 hidden differences between the two scenes.
             </p>
-            <div className="relative glass-card overflow-hidden neon-border flex-1">
+            <div
+              className="relative glass-card overflow-hidden neon-border flex-1 cursor-crosshair select-none"
+              onClick={handleMiss}
+            >
               <img
                 src={spotDiff}
                 alt="Spot the difference UCL match comparison"
                 loading="lazy"
-                width={1200}
-                height={600}
-                className="w-full h-full object-cover"
+                width={1600}
+                height={800}
+                className="w-full h-full object-cover pointer-events-none"
               />
+
+              {/* Hotspots */}
+              {DIFF_SPOTS.map((spot) => {
+                const found = foundDiffs.includes(spot.id);
+                return (
+                  <button
+                    key={spot.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDiffClick(spot.id);
+                    }}
+                    aria-label={`Difference ${spot.id}`}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full transition-all"
+                    style={{
+                      left: spot.x,
+                      top: spot.y,
+                      width: "8%",
+                      paddingBottom: "8%",
+                      height: 0,
+                      border: found ? "3px solid hsl(var(--neon))" : "2px solid transparent",
+                      background: found ? "hsl(var(--neon) / 0.2)" : "transparent",
+                      boxShadow: found ? "0 0 18px hsl(var(--neon) / 0.7)" : "none",
+                    }}
+                  />
+                );
+              })}
+
+              {/* Miss feedback */}
+              {missClick && (
+                <motion.div
+                  initial={{ opacity: 1, scale: 0.5 }}
+                  animate={{ opacity: 0, scale: 1.5 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute w-8 h-8 rounded-full border-2 border-destructive pointer-events-none -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${missClick.x}%`, top: `${missClick.y}%` }}
+                />
+              )}
+
+              {/* Win overlay */}
+              {foundDiffs.length === 10 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute inset-0 flex items-center justify-center bg-background/70"
+                >
+                  <span className="font-display text-3xl md:text-4xl uppercase tracking-widest text-neon">
+                    All 10 found!
+                  </span>
+                </motion.div>
+              )}
             </div>
             <p className="mt-3 text-xs text-muted-foreground font-body text-center">
-              Hint: Look at the player positions, stadium lights &amp; scoreboard
+              Hint: Check the scoreboard, the ad screens, the players & the stadium lights
             </p>
           </motion.div>
 
