@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Gamepad2, Eye, Target, HelpCircle } from "lucide-react";
 import SectionHeader from "./SectionHeader";
-import spotDiff from "@/assets/spot-diff-1.jpg";
+import spotDiff from "@/assets/spot-diff-ucl.jpg";
 import hiddenPlayer from "@/assets/hidden-player.jpg";
 
 const SHOT_ZONES = [
@@ -12,6 +12,21 @@ const SHOT_ZONES = [
   { id: "bl", label: "Bottom Left", x: "18%", y: "70%" },
   { id: "bc", label: "Bottom Center", x: "50%", y: "75%" },
   { id: "br", label: "Bottom Right", x: "82%", y: "70%" },
+];
+
+// Hotspots are positioned on the RIGHT panel of the spot-the-difference image.
+// x is the percentage across the FULL image (so 50–100% lives on the right half).
+const DIFF_SPOTS = [
+  { id: 1, x: "76%", y: "20%" },   // scoreboard area
+  { id: 2, x: "63%", y: "62%" },   // orange ad screen
+  { id: 3, x: "55%", y: "82%" },   // ball / centre circle
+  { id: 4, x: "70%", y: "78%" },   // referee position
+  { id: 5, x: "88%", y: "78%" },   // right-side player jersey
+  { id: 6, x: "53%", y: "72%" },   // left-side player
+  { id: 7, x: "95%", y: "30%" },   // stadium light
+  { id: 8, x: "60%", y: "30%" },   // upper stand banner
+  { id: 9, x: "82%", y: "55%" },   // mid-stand crowd patch
+  { id: 10, x: "98%", y: "70%" },  // corner flag area
 ];
 
 const Keeper = ({ diving }: { diving: "left" | "right" | "center" | null }) => {
@@ -50,6 +65,25 @@ const FanZoneSection = () => {
   const [guesses, setGuesses] = useState<string[]>(["", "", ""]);
   const [showAnswers, setShowAnswers] = useState(false);
   const hiddenPlayers = ["Ronaldinho", "Beckham", "Kaka"];
+
+  // Spot the difference state
+  const [foundDiffs, setFoundDiffs] = useState<number[]>([]);
+  const [missClick, setMissClick] = useState<{ x: number; y: number } | null>(null);
+
+  const handleDiffClick = (id: number) => {
+    if (foundDiffs.includes(id)) return;
+    setFoundDiffs((prev) => [...prev, id]);
+  };
+
+  const handleMiss = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMissClick({ x, y });
+    setTimeout(() => setMissClick(null), 500);
+  };
+
+  const resetDiffs = () => setFoundDiffs([]);
 
   // Penalty shootout state
   const [score, setScore] = useState(0);
@@ -267,27 +301,93 @@ const FanZoneSection = () => {
             viewport={{ once: true }}
             className="glass-card p-6 flex flex-col"
           >
-            <div className="flex items-center gap-2 mb-4">
-              <Eye className="h-5 w-5 text-neon" />
-              <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
-                Spot the Difference
-              </h3>
+            <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+              <div className="flex items-center gap-2">
+                <Eye className="h-5 w-5 text-neon" />
+                <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
+                  Spot the Difference
+                </h3>
+              </div>
+              <div className="flex items-center gap-3 font-heading text-xs uppercase tracking-wider">
+                <span className="text-silver">
+                  Found: <span className="text-neon">{foundDiffs.length}</span>/10
+                </span>
+                <button
+                  onClick={resetDiffs}
+                  className="px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors text-[10px]"
+                >
+                  Reset
+                </button>
+              </div>
             </div>
             <p className="font-body text-xs text-silver mb-4">
-              Compare the two stadium images below. Can you find the hidden differences?
+              Click on the right image to find the 10 hidden differences between the two scenes.
             </p>
-            <div className="relative glass-card overflow-hidden neon-border flex-1">
+            <div
+              className="relative glass-card overflow-hidden neon-border flex-1 cursor-crosshair select-none"
+              onClick={handleMiss}
+            >
               <img
                 src={spotDiff}
                 alt="Spot the difference UCL match comparison"
                 loading="lazy"
-                width={1200}
-                height={600}
-                className="w-full h-full object-cover"
+                width={1600}
+                height={800}
+                className="w-full h-full object-cover pointer-events-none"
               />
+
+              {/* Hotspots */}
+              {DIFF_SPOTS.map((spot) => {
+                const found = foundDiffs.includes(spot.id);
+                return (
+                  <button
+                    key={spot.id}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDiffClick(spot.id);
+                    }}
+                    aria-label={`Difference ${spot.id}`}
+                    className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full transition-all"
+                    style={{
+                      left: spot.x,
+                      top: spot.y,
+                      width: "8%",
+                      paddingBottom: "8%",
+                      height: 0,
+                      border: found ? "3px solid hsl(var(--neon))" : "2px solid transparent",
+                      background: found ? "hsl(var(--neon) / 0.2)" : "transparent",
+                      boxShadow: found ? "0 0 18px hsl(var(--neon) / 0.7)" : "none",
+                    }}
+                  />
+                );
+              })}
+
+              {/* Miss feedback */}
+              {missClick && (
+                <motion.div
+                  initial={{ opacity: 1, scale: 0.5 }}
+                  animate={{ opacity: 0, scale: 1.5 }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute w-8 h-8 rounded-full border-2 border-destructive pointer-events-none -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: `${missClick.x}%`, top: `${missClick.y}%` }}
+                />
+              )}
+
+              {/* Win overlay */}
+              {foundDiffs.length === 10 && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="absolute inset-0 flex items-center justify-center bg-background/70"
+                >
+                  <span className="font-display text-3xl md:text-4xl uppercase tracking-widest text-neon">
+                    All 10 found!
+                  </span>
+                </motion.div>
+              )}
             </div>
             <p className="mt-3 text-xs text-muted-foreground font-body text-center">
-              Hint: Look at the player positions, stadium lights &amp; scoreboard
+              Hint: Check the scoreboard, the ad screens, the players & the stadium lights
             </p>
           </motion.div>
 
