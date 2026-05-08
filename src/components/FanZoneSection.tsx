@@ -69,10 +69,17 @@ const FanZoneSection = () => {
   // Spot the difference state
   const [foundDiffs, setFoundDiffs] = useState<number[]>([]);
   const [missClick, setMissClick] = useState<{ x: number; y: number } | null>(null);
+  const [popups, setPopups] = useState<{ key: number; x: string; y: string }[]>([]);
+  const [flash, setFlash] = useState(false);
 
-  const handleDiffClick = (id: number) => {
+  const handleDiffClick = (id: number, x: string, y: string) => {
     if (foundDiffs.includes(id)) return;
     setFoundDiffs((prev) => [...prev, id]);
+    const key = Date.now() + id;
+    setPopups((p) => [...p, { key, x, y }]);
+    setFlash(true);
+    setTimeout(() => setFlash(false), 350);
+    setTimeout(() => setPopups((p) => p.filter((pp) => pp.key !== key)), 1200);
   };
 
   const handleMiss = (e: React.MouseEvent<HTMLDivElement>) => {
