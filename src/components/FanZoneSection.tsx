@@ -14,6 +14,21 @@ const SHOT_ZONES = [
   { id: "br", label: "Bottom Right", x: "82%", y: "70%" },
 ];
 
+// Hotspots are positioned on the RIGHT panel of the spot-the-difference image.
+// x is the percentage across the FULL image (so 50–100% lives on the right half).
+const DIFF_SPOTS = [
+  { id: 1, x: "76%", y: "20%" },   // scoreboard area
+  { id: 2, x: "63%", y: "62%" },   // orange ad screen
+  { id: 3, x: "55%", y: "82%" },   // ball / centre circle
+  { id: 4, x: "70%", y: "78%" },   // referee position
+  { id: 5, x: "88%", y: "78%" },   // right-side player jersey
+  { id: 6, x: "53%", y: "72%" },   // left-side player
+  { id: 7, x: "95%", y: "30%" },   // stadium light
+  { id: 8, x: "60%", y: "30%" },   // upper stand banner
+  { id: 9, x: "82%", y: "55%" },   // mid-stand crowd patch
+  { id: 10, x: "98%", y: "70%" },  // corner flag area
+];
+
 const Keeper = ({ diving }: { diving: "left" | "right" | "center" | null }) => {
   const rotate = diving === "left" ? -55 : diving === "right" ? 55 : 0;
   return (
@@ -50,6 +65,25 @@ const FanZoneSection = () => {
   const [guesses, setGuesses] = useState<string[]>(["", "", ""]);
   const [showAnswers, setShowAnswers] = useState(false);
   const hiddenPlayers = ["Ronaldinho", "Beckham", "Kaka"];
+
+  // Spot the difference state
+  const [foundDiffs, setFoundDiffs] = useState<number[]>([]);
+  const [missClick, setMissClick] = useState<{ x: number; y: number } | null>(null);
+
+  const handleDiffClick = (id: number) => {
+    if (foundDiffs.includes(id)) return;
+    setFoundDiffs((prev) => [...prev, id]);
+  };
+
+  const handleMiss = (e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    setMissClick({ x, y });
+    setTimeout(() => setMissClick(null), 500);
+  };
+
+  const resetDiffs = () => setFoundDiffs([]);
 
   // Penalty shootout state
   const [score, setScore] = useState(0);
