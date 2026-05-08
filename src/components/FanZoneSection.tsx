@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Gamepad2, Eye, Target, HelpCircle } from "lucide-react";
 import SectionHeader from "./SectionHeader";
-import spotDiff from "@/assets/spot-diff-1.jpg";
+import spotDiff from "@/assets/spot-diff-ucl.jpg";
 import hiddenPlayer from "@/assets/hidden-player.jpg";
 
 const SHOT_ZONES = [
