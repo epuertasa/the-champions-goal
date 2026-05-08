@@ -347,12 +347,23 @@ const FanZoneSection = () => {
               {DIFF_SPOTS.map((spot) => {
                 const found = foundDiffs.includes(spot.id);
                 return (
-                  <button
+                  <motion.button
                     key={spot.id}
                     onClick={(e) => {
                       e.stopPropagation();
-                      handleDiffClick(spot.id);
+                      handleDiffClick(spot.id, spot.x, spot.y);
                     }}
+                    whileHover={{ scale: 1.15 }}
+                    animate={
+                      found
+                        ? { scale: [1, 1.6, 1], rotate: [0, 15, -15, 0] }
+                        : { scale: [1, 1.05, 1] }
+                    }
+                    transition={
+                      found
+                        ? { duration: 0.6 }
+                        : { duration: 1.8, repeat: Infinity, ease: "easeInOut" }
+                    }
                     aria-label={`Difference ${spot.id}`}
                     className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full transition-all"
                     style={{
@@ -361,23 +372,97 @@ const FanZoneSection = () => {
                       width: "8%",
                       paddingBottom: "8%",
                       height: 0,
-                      border: found ? "3px solid hsl(var(--neon))" : "2px solid transparent",
-                      background: found ? "hsl(var(--neon) / 0.2)" : "transparent",
-                      boxShadow: found ? "0 0 18px hsl(var(--neon) / 0.7)" : "none",
+                      border: found
+                        ? "3px solid hsl(var(--neon))"
+                        : "2px dashed hsl(var(--neon) / 0.25)",
+                      background: found
+                        ? "hsl(var(--neon) / 0.25)"
+                        : "transparent",
+                      boxShadow: found
+                        ? "0 0 28px hsl(var(--neon) / 0.9), inset 0 0 12px hsl(var(--neon) / 0.6)"
+                        : "none",
                     }}
                   />
                 );
               })}
 
+              {/* Found popups: floating "+1 / FOUND!" + ripple burst */}
+              {popups.map((p) => (
+                <div
+                  key={p.key}
+                  className="absolute pointer-events-none -translate-x-1/2 -translate-y-1/2"
+                  style={{ left: p.x, top: p.y }}
+                >
+                  {/* Ripple rings */}
+                  {[0, 0.15, 0.3].map((delay, i) => (
+                    <motion.span
+                      key={i}
+                      initial={{ scale: 0, opacity: 0.9 }}
+                      animate={{ scale: 4, opacity: 0 }}
+                      transition={{ duration: 0.9, delay, ease: "easeOut" }}
+                      className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full border-2 border-neon"
+                    />
+                  ))}
+                  {/* Confetti sparks */}
+                  {Array.from({ length: 8 }).map((_, i) => {
+                    const angle = (i / 8) * Math.PI * 2;
+                    const dx = Math.cos(angle) * 60;
+                    const dy = Math.sin(angle) * 60;
+                    return (
+                      <motion.span
+                        key={i}
+                        initial={{ x: 0, y: 0, opacity: 1, scale: 1 }}
+                        animate={{ x: dx, y: dy, opacity: 0, scale: 0.3 }}
+                        transition={{ duration: 0.8, ease: "easeOut" }}
+                        className="absolute left-1/2 top-1/2 w-2 h-2 rounded-full bg-neon"
+                        style={{ boxShadow: "0 0 10px hsl(var(--neon))" }}
+                      />
+                    );
+                  })}
+                  {/* Floating label */}
+                  <motion.div
+                    initial={{ y: 0, opacity: 0, scale: 0.6 }}
+                    animate={{ y: -50, opacity: [0, 1, 1, 0], scale: 1.1 }}
+                    transition={{ duration: 1.2, ease: "easeOut" }}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-base md:text-xl uppercase tracking-widest text-neon whitespace-nowrap"
+                    style={{ textShadow: "0 0 12px hsl(var(--neon))" }}
+                  >
+                    +1 · Found!
+                  </motion.div>
+                </div>
+              ))}
+
+              {/* Screen flash on hit */}
+              {flash && (
+                <motion.div
+                  initial={{ opacity: 0.5 }}
+                  animate={{ opacity: 0 }}
+                  transition={{ duration: 0.35 }}
+                  className="absolute inset-0 pointer-events-none bg-neon/30"
+                />
+              )}
+
               {/* Miss feedback */}
               {missClick && (
-                <motion.div
-                  initial={{ opacity: 1, scale: 0.5 }}
-                  animate={{ opacity: 0, scale: 1.5 }}
-                  transition={{ duration: 0.5 }}
-                  className="absolute w-8 h-8 rounded-full border-2 border-destructive pointer-events-none -translate-x-1/2 -translate-y-1/2"
+                <div
+                  className="absolute pointer-events-none -translate-x-1/2 -translate-y-1/2"
                   style={{ left: `${missClick.x}%`, top: `${missClick.y}%` }}
-                />
+                >
+                  <motion.div
+                    initial={{ opacity: 1, scale: 0.4 }}
+                    animate={{ opacity: 0, scale: 2 }}
+                    transition={{ duration: 0.5 }}
+                    className="w-10 h-10 rounded-full border-2 border-destructive"
+                  />
+                  <motion.span
+                    initial={{ y: 0, opacity: 1 }}
+                    animate={{ y: -25, opacity: 0 }}
+                    transition={{ duration: 0.5 }}
+                    className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 font-heading text-xs uppercase tracking-widest text-destructive"
+                  >
+                    Miss
+                  </motion.span>
+                </div>
               )}
 
               {/* Win overlay */}
