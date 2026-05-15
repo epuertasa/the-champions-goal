@@ -10,19 +10,19 @@ const coaches = [
     src: coachGuardiola,
     name: "Pep Guardiola",
     title: "The Architect",
-    quote: "Redefined possession football and high pressing — winner with Barcelona & Manchester City.",
+    quote: "Para nosotros es el entrenador que mejor cuida el balón. Su Barça y su City nos encantan por cómo juegan.",
   },
   {
     src: coachKlopp,
     name: "Jürgen Klopp",
     title: "Heavy Metal Football",
-    quote: "Turned Liverpool into European royalty again with relentless intensity and gegenpressing.",
+    quote: "Su Liverpool era pura intensidad. Daba gusto verlos correr y presionar durante 90 minutos.",
   },
   {
     src: coachAncelotti,
     name: "Carlo Ancelotti",
     title: "Mr. Champions League",
-    quote: "Five UCL titles. The calmest mind in the dugout — a record-breaking European master.",
+    quote: "Cinco Champions ganadas. Tranquilo en el banquillo y siempre con la receta para ganar partidos grandes.",
   },
 ];
 
@@ -39,32 +39,28 @@ const OpinionSection = () => (
         className="glass-card p-8 md:p-12 mb-12 max-w-3xl mx-auto"
       >
         <h3 className="font-heading text-2xl uppercase tracking-wider text-silver-bright mb-6">
-          The Modern Era of the UCL
+          Lo que pensamos de la Champions
         </h3>
         <div className="space-y-4 font-body text-sm leading-relaxed text-silver">
           <p>
-            The UEFA Champions League has evolved into more than just a football
-            tournament — it is a global spectacle that defines the pinnacle of
-            European club football. Over the past two decades, the competition has
-            witnessed a dramatic shift in playing styles, from the defensive
-            masterclasses of Italian clubs to the high-pressing, possession-based
-            systems pioneered by teams like Barcelona and Manchester City.
+            Para nosotros la Champions League es la mejor competición de clubes
+            del mundo. Los partidos de los martes y miércoles tienen algo
+            especial: la música del himno, los estadios llenos y esa sensación
+            de que cualquier cosa puede pasar.
           </p>
           <p>
-            Modern tactics emphasize versatility and athleticism. The rise of
-            "false nines," inverted full-backs, and pressing triggers has
-            transformed how teams approach each match. Coaches like Pep Guardiola,
-            Jürgen Klopp, and Carlo Ancelotti have redefined what it means to
-            compete at the highest level, blending tactical sophistication with
-            individual brilliance.
+            Nos gusta cómo han cambiado los equipos en los últimos años. Antes
+            ganaba el que mejor defendía y ahora vemos partidos con muchos
+            goles, equipos que presionan arriba y entrenadores que se la juegan.
+            Pep Guardiola, Klopp y Ancelotti son los que más nos llaman la
+            atención, cada uno con su estilo.
           </p>
           <p>
-            The financial landscape has also reshaped the competition. Clubs backed
-            by massive investments have disrupted traditional hierarchies, while
-            the introduction of Financial Fair Play aimed — with mixed results — to
-            level the playing field. Yet the magic of the UCL endures: on any
-            given night, underdogs can topple giants, and a single moment of
-            genius can rewrite history forever.
+            También está el tema del dinero, que cada vez pesa más y hace que
+            los equipos grandes ganen casi siempre. Aun así, lo bonito de la
+            Champions es que de vez en cuando aparece un equipo pequeño o un
+            jugador que decide un partido él solo, y por eso seguimos
+            enganchados.
           </p>
         </div>
       </motion.div>
