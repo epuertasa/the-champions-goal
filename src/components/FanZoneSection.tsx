@@ -478,72 +478,8 @@ const FanZoneSection = () => {
             </p>
           </motion.div>
 
-          {/* Activity 3: The Hidden Ball */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="glass-card p-6 flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <HelpCircle className="h-5 w-5 text-neon" />
-              <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
-                The Hidden Ball
-              </h3>
-            </div>
-            <p className="font-body text-xs text-silver mb-4">
-              Guess the legendary player from the silhouette! Type your answers below.
-            </p>
-
-            <div className="relative glass-card overflow-hidden neon-border mb-4">
-              <img
-                src={hiddenPlayer}
-                alt="Mystery player silhouette"
-                loading="lazy"
-                width={800}
-                height={600}
-                className={`w-full aspect-[4/3] object-cover transition-all duration-700 ${
-                  showAnswers ? "blur-0" : "blur-sm"
-                }`}
-              />
-            </div>
-
-            <div className="space-y-2 flex-1">
-              {hiddenPlayers.map((player, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span className="text-neon font-heading text-sm">{i + 1}.</span>
-                  <input
-                    type="text"
-                    placeholder={`Player ${i + 1}...`}
-                    value={guesses[i]}
-                    onChange={(e) => {
-                      const next = [...guesses];
-                      next[i] = e.target.value;
-                      setGuesses(next);
-                    }}
-                    className="flex-1 bg-secondary border border-border rounded px-3 py-1.5 text-xs text-silver-bright font-body placeholder:text-muted-foreground focus:outline-none focus:border-neon/50 transition-colors"
-                  />
-                  {showAnswers && (
-                    <span className={`text-xs font-heading ${
-                      guesses[i].toLowerCase().trim() === player.toLowerCase()
-                        ? "text-green-400"
-                        : "text-destructive"
-                    }`}>
-                      {player}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setShowAnswers(!showAnswers)}
-              className="mt-4 w-full py-2 font-heading text-xs uppercase tracking-widest bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors"
-            >
-              {showAnswers ? "Hide Answers" : "Reveal Answers"}
-            </button>
-          </motion.div>
+          {/* Activity 3: Scrambled Legends */}
+          <ScrambledLegends />
         </div>
       </div>
     </section>
