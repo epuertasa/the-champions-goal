@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { Gamepad2, Eye, Target, HelpCircle } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Gamepad2, Eye, Target, Shuffle, RotateCcw, Lightbulb, Check, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
 import spotDiff from "@/assets/spot-diff-ucl.jpg";
-import hiddenPlayer from "@/assets/hidden-player.jpg";
 
 const SHOT_ZONES = [
   { id: "tl", label: "Top Left", x: "18%", y: "22%" },
