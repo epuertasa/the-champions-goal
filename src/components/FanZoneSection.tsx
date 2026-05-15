@@ -61,10 +61,6 @@ const Keeper = ({ diving }: { diving: "left" | "right" | "center" | null }) => {
 };
 
 const FanZoneSection = () => {
-  const [guesses, setGuesses] = useState<string[]>(["", "", ""]);
-  const [showAnswers, setShowAnswers] = useState(false);
-  const hiddenPlayers = ["Ronaldinho", "Beckham", "Kaka"];
-
   // Spot the difference state
   const [foundDiffs, setFoundDiffs] = useState<number[]>([]);
   const [missClick, setMissClick] = useState<{ x: number; y: number } | null>(null);
