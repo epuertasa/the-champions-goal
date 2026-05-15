@@ -10,19 +10,19 @@ const coaches = [
     src: coachGuardiola,
     name: "Pep Guardiola",
     title: "The Architect",
-    quote: "Para nosotros es el entrenador que mejor cuida el balón. Su Barça y su City nos encantan por cómo juegan.",
+    quote: "For us he's the coach who takes the best care of the ball. We love how his Barça and City play.",
   },
   {
     src: coachKlopp,
     name: "Jürgen Klopp",
     title: "Heavy Metal Football",
-    quote: "Su Liverpool era pura intensidad. Daba gusto verlos correr y presionar durante 90 minutos.",
+    quote: "His Liverpool was pure intensity. It was great to watch them run and press for the full 90 minutes.",
   },
   {
     src: coachAncelotti,
     name: "Carlo Ancelotti",
     title: "Mr. Champions League",
-    quote: "Cinco Champions ganadas. Tranquilo en el banquillo y siempre con la receta para ganar partidos grandes.",
+    quote: "Five Champions League titles. Calm on the bench and always with the recipe to win the big games.",
   },
 ];
 
@@ -39,28 +39,27 @@ const OpinionSection = () => (
         className="glass-card p-8 md:p-12 mb-12 max-w-3xl mx-auto"
       >
         <h3 className="font-heading text-2xl uppercase tracking-wider text-silver-bright mb-6">
-          Lo que pensamos de la Champions
+          What we think about the Champions
         </h3>
         <div className="space-y-4 font-body text-sm leading-relaxed text-silver">
           <p>
-            Para nosotros la Champions League es la mejor competición de clubes
-            del mundo. Los partidos de los martes y miércoles tienen algo
-            especial: la música del himno, los estadios llenos y esa sensación
-            de que cualquier cosa puede pasar.
+            For us, the Champions League is the best club competition in the
+            world. Tuesday and Wednesday nights have something special: the
+            anthem, the packed stadiums and that feeling that anything can
+            happen.
           </p>
           <p>
-            Nos gusta cómo han cambiado los equipos en los últimos años. Antes
-            ganaba el que mejor defendía y ahora vemos partidos con muchos
-            goles, equipos que presionan arriba y entrenadores que se la juegan.
-            Pep Guardiola, Klopp y Ancelotti son los que más nos llaman la
-            atención, cada uno con su estilo.
+            We love how teams have changed over the last few years. Before, the
+            team that defended best used to win, and now we see matches with
+            lots of goals, teams pressing high and coaches taking risks.
+            Guardiola, Klopp and Ancelotti are the ones we like the most, each
+            one with his own style.
           </p>
           <p>
-            También está el tema del dinero, que cada vez pesa más y hace que
-            los equipos grandes ganen casi siempre. Aun así, lo bonito de la
-            Champions es que de vez en cuando aparece un equipo pequeño o un
-            jugador que decide un partido él solo, y por eso seguimos
-            enganchados.
+            There's also the money side, which counts more and more and makes
+            the big clubs win almost every year. Even so, the cool thing about
+            the Champions is that every now and then a small team or a single
+            player decides a match on his own — and that's why we keep watching.
           </p>
         </div>
       </motion.div>
