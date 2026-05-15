@@ -1,9 +1,8 @@
-import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
-import { Gamepad2, Eye, Target, HelpCircle } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Gamepad2, Eye, Target, Shuffle, RotateCcw, Lightbulb, Check, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
 import spotDiff from "@/assets/spot-diff-ucl.jpg";
-import hiddenPlayer from "@/assets/hidden-player.jpg";
 
 const SHOT_ZONES = [
   { id: "tl", label: "Top Left", x: "18%", y: "22%" },
@@ -62,10 +61,6 @@ const Keeper = ({ diving }: { diving: "left" | "right" | "center" | null }) => {
 };
 
 const FanZoneSection = () => {
-  const [guesses, setGuesses] = useState<string[]>(["", "", ""]);
-  const [showAnswers, setShowAnswers] = useState(false);
-  const hiddenPlayers = ["Ronaldinho", "Beckham", "Kaka"];
-
   // Spot the difference state
   const [foundDiffs, setFoundDiffs] = useState<number[]>([]);
   const [missClick, setMissClick] = useState<{ x: number; y: number } | null>(null);
@@ -483,72 +478,8 @@ const FanZoneSection = () => {
             </p>
           </motion.div>
 
-          {/* Activity 3: The Hidden Ball */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.15 }}
-            className="glass-card p-6 flex flex-col"
-          >
-            <div className="flex items-center gap-2 mb-4">
-              <HelpCircle className="h-5 w-5 text-neon" />
-              <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
-                The Hidden Ball
-              </h3>
-            </div>
-            <p className="font-body text-xs text-silver mb-4">
-              Guess the legendary player from the silhouette! Type your answers below.
-            </p>
-
-            <div className="relative glass-card overflow-hidden neon-border mb-4">
-              <img
-                src={hiddenPlayer}
-                alt="Mystery player silhouette"
-                loading="lazy"
-                width={800}
-                height={600}
-                className={`w-full aspect-[4/3] object-cover transition-all duration-700 ${
-                  showAnswers ? "blur-0" : "blur-sm"
-                }`}
-              />
-            </div>
-
-            <div className="space-y-2 flex-1">
-              {hiddenPlayers.map((player, i) => (
-                <div key={i} className="flex items-center gap-2">
-                  <span className="text-neon font-heading text-sm">{i + 1}.</span>
-                  <input
-                    type="text"
-                    placeholder={`Player ${i + 1}...`}
-                    value={guesses[i]}
-                    onChange={(e) => {
-                      const next = [...guesses];
-                      next[i] = e.target.value;
-                      setGuesses(next);
-                    }}
-                    className="flex-1 bg-secondary border border-border rounded px-3 py-1.5 text-xs text-silver-bright font-body placeholder:text-muted-foreground focus:outline-none focus:border-neon/50 transition-colors"
-                  />
-                  {showAnswers && (
-                    <span className={`text-xs font-heading ${
-                      guesses[i].toLowerCase().trim() === player.toLowerCase()
-                        ? "text-green-400"
-                        : "text-destructive"
-                    }`}>
-                      {player}
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <button
-              onClick={() => setShowAnswers(!showAnswers)}
-              className="mt-4 w-full py-2 font-heading text-xs uppercase tracking-widest bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors"
-            >
-              {showAnswers ? "Hide Answers" : "Reveal Answers"}
-            </button>
-          </motion.div>
+          {/* Activity 3: Scrambled Legends */}
+          <ScrambledLegends />
         </div>
       </div>
     </section>
@@ -556,3 +487,322 @@ const FanZoneSection = () => {
 };
 
 export default FanZoneSection;
+
+// ============================================================
+// Scrambled Legends — guess the UCL legend from shuffled letters
+// ============================================================
+
+type Difficulty = "easy" | "medium" | "hard" | "expert";
+
+const LEGEND_POOL: Record<Difficulty, { name: string; hint: string }[]> = {
+  easy: [
+    { name: "MESSI", hint: "Argentina · 8x Ballon d'Or" },
+    { name: "RONALDO", hint: "Portugal · UCL all-time top scorer" },
+    { name: "NEYMAR", hint: "Brazil · Barcelona & PSG star" },
+    { name: "MBAPPE", hint: "France · World Cup winner 2018" },
+    { name: "BENZEMA", hint: "France · Real Madrid #9, Ballon d'Or 2022" },
+    { name: "ZIDANE", hint: "France · Volley vs Leverkusen 2002" },
+  ],
+  medium: [
+    { name: "MODRIC", hint: "Croatia · Real Madrid midfield maestro" },
+    { name: "INIESTA", hint: "Spain · Barcelona midfield magician" },
+    { name: "SUAREZ", hint: "Uruguay · Liverpool & Barcelona striker" },
+    { name: "LEWANDOWSKI", hint: "Poland · Bayern & Barcelona goal machine" },
+    { name: "KROOS", hint: "Germany · Real Madrid passer, 6x UCL" },
+    { name: "RAMOS", hint: "Spain · 93:20 vs Atletico" },
+  ],
+  hard: [
+    { name: "SHEVCHENKO", hint: "Ukraine · Milan #7, 2004 Ballon d'Or" },
+    { name: "RIVALDO", hint: "Brazil · 1999 Ballon d'Or, Barcelona" },
+    { name: "NEDVED", hint: "Czechia · Juventus dynamo, 2003 Ballon d'Or" },
+    { name: "PIRLO", hint: "Italy · Milan & Juventus deep-lying playmaker" },
+    { name: "MALDINI", hint: "Italy · Milan captain, 5x UCL" },
+    { name: "FIGO", hint: "Portugal · Barca to Real Madrid 2000" },
+  ],
+  expert: [
+    { name: "SEEDORF", hint: "Netherlands · UCL with 3 different clubs" },
+    { name: "RIQUELME", hint: "Argentina · Villarreal & Boca No.10" },
+    { name: "LAUDRUP", hint: "Denmark · Barca Dream Team genius" },
+    { name: "STOICHKOV", hint: "Bulgaria · 1994 Ballon d'Or" },
+    { name: "HAGI", hint: "Romania · 'Maradona of the Carpathians'" },
+    { name: "KOEMAN", hint: "Netherlands · 1992 UCL final winner for Barca" },
+  ],
+};
+
+const DIFF_META: { id: Difficulty; label: string; color: string; rounds: number }[] = [
+  { id: "easy", label: "Easy", color: "text-emerald-400 border-emerald-400/40", rounds: 5 },
+  { id: "medium", label: "Medium", color: "text-sky-400 border-sky-400/40", rounds: 5 },
+  { id: "hard", label: "Hard", color: "text-amber-400 border-amber-400/40", rounds: 5 },
+  { id: "expert", label: "Expert", color: "text-fuchsia-400 border-fuchsia-400/40", rounds: 5 },
+];
+
+const shuffle = <T,>(arr: T[]): T[] => {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+
+const scrambleWord = (w: string) => {
+  let out = w;
+  let tries = 0;
+  while (out === w && tries < 20) {
+    out = shuffle(w.split("")).join("");
+    tries++;
+  }
+  return out;
+};
+
+const ScrambledLegends = () => {
+  const [difficulty, setDifficulty] = useState<Difficulty>("easy");
+  const [roundIdx, setRoundIdx] = useState(0);
+  const [solved, setSolved] = useState<number>(0);
+  const [revealed, setRevealed] = useState(false);
+  const [hintShown, setHintShown] = useState(false);
+  const [feedback, setFeedback] = useState<"ok" | "fail" | null>(null);
+  const [seed, setSeed] = useState(0);
+
+  // Build a fresh playlist whenever difficulty or seed changes
+  const playlist = useMemo(
+    () => shuffle(LEGEND_POOL[difficulty]).slice(0, DIFF_META.find((d) => d.id === difficulty)!.rounds),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [difficulty, seed]
+  );
+
+  const current = playlist[roundIdx];
+
+  // Letter tile state
+  const [tiles, setTiles] = useState<{ ch: string; placed: boolean; id: number }[]>([]);
+  const [answer, setAnswer] = useState<{ ch: string; tileId: number }[]>([]);
+
+  useEffect(() => {
+    if (!current) return;
+    const scrambled = scrambleWord(current.name);
+    setTiles(scrambled.split("").map((ch, id) => ({ ch, id, placed: false })));
+    setAnswer([]);
+    setRevealed(false);
+    setHintShown(false);
+    setFeedback(null);
+  }, [current]);
+
+  // Auto-check when answer is full
+  useEffect(() => {
+    if (!current || answer.length !== current.name.length) return;
+    const guess = answer.map((a) => a.ch).join("");
+    if (guess === current.name) {
+      setFeedback("ok");
+      setSolved((s) => s + 1);
+      setTimeout(() => nextRound(), 1100);
+    } else {
+      setFeedback("fail");
+      setTimeout(() => setFeedback(null), 600);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [answer]);
+
+  const placeTile = (id: number) => {
+    if (revealed || feedback === "ok") return;
+    const tile = tiles.find((t) => t.id === id);
+    if (!tile || tile.placed) return;
+    setTiles((t) => t.map((x) => (x.id === id ? { ...x, placed: true } : x)));
+    setAnswer((a) => [...a, { ch: tile.ch, tileId: id }]);
+  };
+
+  const removeAnswer = (idx: number) => {
+    if (revealed || feedback === "ok") return;
+    const item = answer[idx];
+    if (!item) return;
+    setAnswer((a) => a.filter((_, i) => i !== idx));
+    setTiles((t) => t.map((x) => (x.id === item.tileId ? { ...x, placed: false } : x)));
+  };
+
+  const nextRound = () => {
+    if (roundIdx + 1 >= playlist.length) {
+      // Loop / refresh
+      setRoundIdx(0);
+      setSeed((s) => s + 1);
+      setSolved(0);
+    } else {
+      setRoundIdx((r) => r + 1);
+    }
+  };
+
+  const skip = () => {
+    setRevealed(true);
+    setTimeout(() => nextRound(), 1400);
+  };
+
+  const switchDifficulty = (d: Difficulty) => {
+    setDifficulty(d);
+    setRoundIdx(0);
+    setSolved(0);
+    setSeed((s) => s + 1);
+  };
+
+  const reshuffle = () => {
+    if (!current) return;
+    const scrambled = scrambleWord(current.name);
+    setTiles(scrambled.split("").map((ch, id) => ({ ch, id, placed: false })));
+    setAnswer([]);
+  };
+
+  const meta = DIFF_META.find((d) => d.id === difficulty)!;
+
+  if (!current) return null;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: 0.15 }}
+      className="glass-card p-6 flex flex-col"
+    >
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <div className="flex items-center gap-2">
+          <Shuffle className="h-5 w-5 text-neon" />
+          <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
+            Scrambled Legends
+          </h3>
+        </div>
+        <div className="flex items-center gap-3 font-heading text-xs uppercase tracking-wider">
+          <span className="text-silver">
+            Round <span className="text-neon">{roundIdx + 1}</span>/{playlist.length}
+          </span>
+          <span className="text-silver">
+            Solved <span className="text-neon">{solved}</span>
+          </span>
+        </div>
+      </div>
+
+      {/* Difficulty selector */}
+      <div className="flex flex-wrap gap-2 mb-4">
+        {DIFF_META.map((d) => (
+          <button
+            key={d.id}
+            onClick={() => switchDifficulty(d.id)}
+            className={`font-heading text-[10px] uppercase tracking-[0.25em] px-3 py-1.5 rounded border transition-all ${
+              d.id === difficulty
+                ? `${d.color} bg-background/50`
+                : "border-border/50 text-silver hover:border-neon/50 hover:text-neon"
+            }`}
+          >
+            {d.label}
+          </button>
+        ))}
+      </div>
+
+      <p className="font-body text-xs text-silver mb-3">
+        Unscramble the legend's name. Click letters to build the answer · click placed letters to remove them.
+      </p>
+
+      {/* Answer slots */}
+      <div className={`relative rounded-lg border-2 px-3 py-4 mb-4 transition-colors ${
+        feedback === "ok"
+          ? "border-emerald-400 bg-emerald-400/10"
+          : feedback === "fail"
+          ? "border-destructive bg-destructive/10 animate-pulse"
+          : "border-neon/30 bg-background/40"
+      }`}>
+        <div className="flex flex-wrap justify-center gap-1.5 min-h-[3rem]">
+          {Array.from({ length: current.name.length }).map((_, i) => {
+            const slot = answer[i];
+            return (
+              <button
+                key={i}
+                onClick={() => slot && removeAnswer(i)}
+                disabled={!slot}
+                className={`w-9 h-11 md:w-10 md:h-12 rounded border font-heading text-lg md:text-xl uppercase flex items-center justify-center transition-all ${
+                  slot
+                    ? "bg-neon/20 border-neon text-silver-bright hover:bg-destructive/30 hover:border-destructive cursor-pointer"
+                    : "bg-background/60 border-border text-muted-foreground"
+                }`}
+              >
+                {revealed ? current.name[i] : slot?.ch ?? ""}
+              </button>
+            );
+          })}
+        </div>
+
+        <AnimatePresence>
+          {feedback === "ok" && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-emerald-500 text-white font-heading text-[10px] uppercase tracking-widest flex items-center gap-1"
+            >
+              <Check className="h-3 w-3" /> Correct
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Letter tiles */}
+      <div className="flex flex-wrap justify-center gap-1.5 mb-4 min-h-[3rem]">
+        {tiles.map((t) => (
+          <motion.button
+            key={t.id}
+            onClick={() => placeTile(t.id)}
+            whileHover={!t.placed ? { y: -3, scale: 1.05 } : {}}
+            whileTap={!t.placed ? { scale: 0.92 } : {}}
+            animate={{ opacity: t.placed ? 0.2 : 1 }}
+            disabled={t.placed || revealed}
+            className={`w-9 h-11 md:w-10 md:h-12 rounded font-heading text-lg md:text-xl uppercase border transition-colors ${
+              t.placed
+                ? "bg-background/30 border-border/40 text-muted-foreground cursor-not-allowed"
+                : "bg-gradient-to-b from-navy-mid to-background border-neon/50 text-silver-bright hover:border-neon hover:text-neon shadow-[0_2px_0_hsl(var(--neon)/0.4)]"
+            }`}
+          >
+            {t.ch}
+          </motion.button>
+        ))}
+      </div>
+
+      {/* Hint */}
+      <AnimatePresence>
+        {hintShown && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mb-3 px-3 py-2 rounded border border-amber-400/40 bg-amber-400/5 text-xs text-amber-200 font-body"
+          >
+            💡 {current.hint}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Controls */}
+      <div className="grid grid-cols-3 gap-2 mt-auto">
+        <button
+          onClick={() => setHintShown(true)}
+          disabled={hintShown}
+          className="inline-flex items-center justify-center gap-1.5 py-2 font-heading text-[10px] uppercase tracking-widest bg-secondary text-silver-bright border border-border rounded hover:border-amber-400/60 hover:text-amber-300 transition-colors disabled:opacity-50"
+        >
+          <Lightbulb className="h-3.5 w-3.5" /> Hint
+        </button>
+        <button
+          onClick={reshuffle}
+          className="inline-flex items-center justify-center gap-1.5 py-2 font-heading text-[10px] uppercase tracking-widest bg-secondary text-silver-bright border border-border rounded hover:border-neon/60 hover:text-neon transition-colors"
+        >
+          <RotateCcw className="h-3.5 w-3.5" /> Reshuffle
+        </button>
+        <button
+          onClick={skip}
+          className="inline-flex items-center justify-center gap-1.5 py-2 font-heading text-[10px] uppercase tracking-widest bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors"
+        >
+          Reveal · Skip
+        </button>
+      </div>
+
+      {solved >= playlist.length && (
+        <div className="mt-4 flex items-center justify-center gap-2 font-heading text-xs uppercase tracking-widest text-neon">
+          <Trophy className="h-4 w-4" /> {meta.label} cleared!
+        </div>
+      )}
+    </motion.div>
+  );
+};
