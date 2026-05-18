@@ -21,7 +21,7 @@
 **The Champions Goal** is a modern, professional football blog dedicated to celebrating the champions league moments, legendary players, and iconic goals. Built with cutting-edge web technologies, this platform delivers an engaging experience for football enthusiasts worldwide.
 
 <div align="center">
-  <img src="https://media.giphy.com/media/Y4eJbVMvTnMqSQqKKS/giphy.gif" width="400" alt="Football"/>
+ <img width="1694" height="821" alt="image" src="https://github.com/user-attachments/assets/6440c488-e225-43ea-b3f1-a6da6a05eac6" />
 </div>
 
 <br>
