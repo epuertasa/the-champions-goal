@@ -1,0 +1,43 @@
+# Dependencies
+node_modules
+
+# Testing
+coverage
+.nyc_output
+
+# IDE and Editor
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Build
+dist
+build
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# OS
+Thumbs.db
+.AppleDouble
+
+# Git
+.git
+.gitignore
+
+# Misc
+README.md
+CONTRIBUTING.md
+DEPLOYMENT.md
+LICENSE
