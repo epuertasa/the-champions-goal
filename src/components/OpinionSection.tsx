@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { PenLine } from "lucide-react";
+import { PenLine, Star, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
 import coachGuardiola from "@/assets/coach-guardiola.jpg";
 import coachKlopp from "@/assets/coach-klopp.jpg";
@@ -36,12 +36,66 @@ const OpinionSection = () => (
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="glass-card p-8 md:p-12 mb-12 max-w-3xl mx-auto"
+        className="relative glass-card p-8 md:p-14 mb-16 max-w-6xl mx-auto overflow-hidden"
       >
-        <h3 className="font-heading text-2xl uppercase tracking-wider text-silver-bright mb-6">
-          What we think about the Champions
+        {/* Animated CL-style accent */}
+        <div
+          aria-hidden
+          className="absolute -top-24 -right-24 w-72 h-72 rounded-full blur-3xl opacity-40 animate-float-slow"
+          style={{
+            background:
+              "radial-gradient(circle, hsl(var(--neon-blue) / 0.5), transparent 70%)",
+          }}
+        />
+        <div
+          aria-hidden
+          className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-30 animate-float-slow"
+          style={{
+            animationDelay: "2s",
+            background:
+              "radial-gradient(circle, hsl(var(--neon-glow) / 0.5), transparent 70%)",
+          }}
+        />
+
+        {/* Header row */}
+        <div className="relative flex items-center justify-between mb-2">
+          <div className="flex items-center gap-3">
+            <Trophy className="h-6 w-6 text-neon animate-twinkle" />
+            <p className="font-heading text-[0.7rem] uppercase tracking-[0.4em] text-neon">
+              Our Take
+            </p>
+          </div>
+          <div className="hidden sm:flex items-center gap-1.5">
+            {[0, 1, 2, 3, 4].map((i) => (
+              <Star
+                key={i}
+                className="h-3 w-3 text-neon animate-twinkle"
+                style={{ animationDelay: `${i * 0.3}s` }}
+                fill="currentColor"
+              />
+            ))}
+          </div>
+        </div>
+
+        <h3 className="relative font-display text-4xl md:text-5xl uppercase tracking-wider text-silver-bright mb-3">
+          What we think about{" "}
+          <span
+            className="neon-text"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, hsl(var(--neon-blue)), hsl(var(--neon-glow)), hsl(var(--neon-blue)))",
+              backgroundSize: "200% 100%",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              animation: "shimmer 6s linear infinite",
+            }}
+          >
+            the Champions
+          </span>
         </h3>
-        <div className="space-y-4 font-body text-sm leading-relaxed text-silver">
+        <div className="section-divider mb-8" />
+
+        <div className="relative grid md:grid-cols-2 gap-x-12 gap-y-5 font-body text-[0.95rem] leading-relaxed text-silver">
           <p>
             For us, the Champions League is the best club competition in the
             world. Tuesday and Wednesday nights have something special: the
