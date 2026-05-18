@@ -46,20 +46,30 @@ const OpinionSection = () => (
             For us, the Champions League is the best club competition in the
             world. Tuesday and Wednesday nights have something special: the
             anthem, the packed stadiums and that feeling that anything can
-            happen.
+            happen. We always get together to watch the matches, and the
+            atmosphere is incredible when a goal comes in the last minute.
           </p>
           <p>
             We love how teams have changed over the last few years. Before, the
             team that defended best used to win, and now we see matches with
             lots of goals, teams pressing high and coaches taking risks.
             Guardiola, Klopp and Ancelotti are the ones we like the most, each
-            one with his own style.
+            one with his own style. The group stage is fun, but the knockout
+            rounds are on another level because one mistake can send you home.
+          </p>
+          <p>
+            We have seen some amazing comebacks that we will never forget, like
+            teams turning around a three-goal deficit or winning in extra time
+            with a last-gasp strike. Those moments are why this competition is
+            different from the league or the cup.
           </p>
           <p>
             There's also the money side, which counts more and more and makes
             the big clubs win almost every year. Even so, the cool thing about
             the Champions is that every now and then a small team or a single
             player decides a match on his own — and that's why we keep watching.
+            It is pure emotion from start to finish, and that is something no
+            other tournament gives us.
           </p>
         </div>
       </motion.div>
