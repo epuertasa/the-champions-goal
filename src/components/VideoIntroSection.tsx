@@ -7,23 +7,21 @@ const VideoIntroSection = () => (
     <div className="container mx-auto">
       <SectionHeader icon={Video} label="Video Introduction" title="The Kick-Off" />
 
-      <div className="grid md:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-3 gap-8 items-stretch">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="md:col-span-2 glass-card neon-border overflow-hidden"
+          className="md:col-span-2 aspect-video"
         >
-          <div className="aspect-video bg-navy-deep/60">
-            <iframe
-              src="https://drive.google.com/file/d/12buUeHJsWmzEliKcansD-DEbxvgbQtNK/preview"
-              title="The Champions Goal — Video Introduction"
-              allow="autoplay"
-              allowFullScreen
-              className="w-full h-full"
-            />
-          </div>
+          <iframe
+            src="https://drive.google.com/file/d/12buUeHJsWmzEliKcansD-DEbxvgbQtNK/preview"
+            title="The Champions Goal — Video Introduction"
+            allow="autoplay"
+            allowFullScreen
+            className="w-full h-full block"
+          />
         </motion.div>
 
         <motion.div
