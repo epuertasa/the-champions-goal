@@ -18,7 +18,7 @@
 
 ## 🎯 About The Project
 
-**The Champions Goal** is a modern, professional football blog dedicated to celebrating the sport's greatest moments, legendary players, and iconic goals. Built with cutting-edge web technologies, this platform delivers an engaging experience for football enthusiasts worldwide.
+**The Champions Goal** is a modern, professional football blog dedicated to celebrating the champions league moments, legendary players, and iconic goals. Built with cutting-edge web technologies, this platform delivers an engaging experience for football enthusiasts worldwide.
 
 <div align="center">
   <img src="https://media.giphy.com/media/Y4eJbVMvTnMqSQqKKS/giphy.gif" width="400" alt="Football"/>
@@ -275,7 +275,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙋 Support & Contact
 
-- 📧 **Email:** erpuam25@bemen3.cat
+- 📧 **Email:** erikpuertas1008@gmail.com
 - 🐙 **GitHub:** [@epuertasa](https://github.com/epuertasa)
 - 📍 **Location:** Barcelona, Spain 🇪🇸
 
@@ -298,6 +298,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <br>
 
 <div align="center">
-  <img src="https://media.giphy.com/media/hvRJCLFzcasrng815Q/giphy.gif" width="29px" alt="wave"/>
   <p><strong>Thanks for visiting! Happy coding! 🚀</strong></p>
 </div>
