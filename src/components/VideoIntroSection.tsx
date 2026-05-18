@@ -15,7 +15,15 @@ const VideoIntroSection = () => (
           transition={{ duration: 0.6 }}
           className="md:col-span-2 glass-card neon-border overflow-hidden"
         >
-          <div className="aspect-video bg-navy-deep/60" />
+          <div className="aspect-video bg-navy-deep/60">
+            <iframe
+              src="https://drive.google.com/file/d/12buUeHJsWmzEliKcansD-DEbxvgbQtNK/preview"
+              title="The Champions Goal — Video Introduction"
+              allow="autoplay"
+              allowFullScreen
+              className="w-full h-full"
+            />
+          </div>
         </motion.div>
 
         <motion.div
