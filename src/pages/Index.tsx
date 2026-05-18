@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import AmbientBackground from "@/components/AmbientBackground";
 import HeroBanner from "@/components/HeroBanner";
 import VideoIntroSection from "@/components/VideoIntroSection";
 import BestGoalsSection from "@/components/BestGoalsSection";
@@ -13,7 +14,8 @@ import SectionBanner from "@/components/SectionBanner";
 import Footer from "@/components/Footer";
 
 const Index = () => (
-  <div className="min-h-screen">
+  <div className="min-h-screen relative">
+    <AmbientBackground />
     <Navbar />
     <HeroBanner />
     <VideoIntroSection />
