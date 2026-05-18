@@ -5,8 +5,6 @@
 **First off, thank you for considering contributing to The Champions Goal!** It's people like you that make this blog such a great tool.
 
 </div>
-
-<br>
       
 <img width="1891" height="855" alt="image" src="https://github.com/user-attachments/assets/b06eed1c-2bb3-42c3-a38c-9d91294226c5" />
 
