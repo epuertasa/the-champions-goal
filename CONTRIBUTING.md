@@ -4,7 +4,7 @@
 
 **First off, thank you for considering contributing to The Champions Goal!** It's people like you that make this blog such a great tool.
 
-<img src="https://media.giphy.com/media/13HgywJktx894Le/giphy.gif" width="300" alt="Contributions Welcome"/>
+<img width="1677" height="824" alt="image" src="https://github.com/user-attachments/assets/e05fd8c9-6677-4ea6-a937-c4bcb733e817" />
 
 </div>
 
