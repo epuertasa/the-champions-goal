@@ -4,7 +4,7 @@
 
 **First off, thank you for considering contributing to The Champions Goal!** It's people like you that make this blog such a great tool.
 
-<img width="1661" height="812" alt="image" src="https://github.com/user-attachments/assets/547868c2-9c2a-4298-9cd0-95485950f08f" />
+<img width="1907" height="913" alt="image" src="https://github.com/user-attachments/assets/e9bae350-48a8-4635-a0e4-0ab64964d4b7" />
 
 
 </div>
