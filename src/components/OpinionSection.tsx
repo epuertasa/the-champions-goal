@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PenLine, Star, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+import { useT } from "@/contexts/LanguageContext";
 import coachGuardiola from "@/assets/coach-guardiola.jpg";
 import coachKlopp from "@/assets/coach-klopp.jpg";
 import coachAncelotti from "@/assets/coach-ancelotti.jpg";
@@ -26,7 +27,9 @@ const coaches = [
   },
 ];
 
-const OpinionSection = () => (
+const OpinionSection = () => {
+  const t = useT();
+  return (
   <section id="opinion" className="py-24 px-6">
     <div className="container mx-auto">
       <SectionHeader icon={PenLine} label="Post 2" title="Tactical Vision" />
@@ -62,7 +65,7 @@ const OpinionSection = () => (
           <div className="flex items-center gap-3">
             <Trophy className="h-6 w-6 text-neon animate-twinkle" />
             <p className="font-heading text-[0.7rem] uppercase tracking-[0.4em] text-neon">
-              Our Take
+              {t("Our Take")}
             </p>
           </div>
           <div className="hidden sm:flex items-center gap-1.5">
@@ -78,7 +81,7 @@ const OpinionSection = () => (
         </div>
 
         <h3 className="relative font-display text-4xl md:text-5xl uppercase tracking-wider text-silver-bright mb-3">
-          What we think about{" "}
+          {t("What we think about")}{" "}
           <span
             className="neon-text"
             style={{
@@ -90,41 +93,16 @@ const OpinionSection = () => (
               animation: "shimmer 6s linear infinite",
             }}
           >
-            the Champions
+            {t("the Champions")}
           </span>
         </h3>
         <div className="section-divider mb-8" />
 
         <div className="relative grid md:grid-cols-2 gap-x-12 gap-y-5 font-body text-[0.95rem] leading-relaxed text-silver">
-          <p>
-            For us, the Champions League is the best club competition in the
-            world. Tuesday and Wednesday nights have something special: the
-            anthem, the packed stadiums and that feeling that anything can
-            happen. We always get together to watch the matches, and the
-            atmosphere is incredible when a goal comes in the last minute.
-          </p>
-          <p>
-            We love how teams have changed over the last few years. Before, the
-            team that defended best used to win, and now we see matches with
-            lots of goals, teams pressing high and coaches taking risks.
-            Guardiola, Klopp and Ancelotti are the ones we like the most, each
-            one with his own style. The group stage is fun, but the knockout
-            rounds are on another level because one mistake can send you home.
-          </p>
-          <p>
-            We have seen some amazing comebacks that we will never forget, like
-            teams turning around a three-goal deficit or winning in extra time
-            with a last-gasp strike. Those moments are why this competition is
-            different from the league or the cup.
-          </p>
-          <p>
-            There's also the money side, which counts more and more and makes
-            the big clubs win almost every year. Even so, the cool thing about
-            the Champions is that every now and then a small team or a single
-            player decides a match on his own — and that's why we keep watching.
-            It is pure emotion from start to finish, and that is something no
-            other tournament gives us.
-          </p>
+          <p>{t("For us, the Champions League is the best club competition in the world. Tuesday and Wednesday nights have something special: the anthem, the packed stadiums and that feeling that anything can happen. We always get together to watch the matches, and the atmosphere is incredible when a goal comes in the last minute.")}</p>
+          <p>{t("We love how teams have changed over the last few years. Before, the team that defended best used to win, and now we see matches with lots of goals, teams pressing high and coaches taking risks. Guardiola, Klopp and Ancelotti are the ones we like the most, each one with his own style. The group stage is fun, but the knockout rounds are on another level because one mistake can send you home.")}</p>
+          <p>{t("We have seen some amazing comebacks that we will never forget, like teams turning around a three-goal deficit or winning in extra time with a last-gasp strike. Those moments are why this competition is different from the league or the cup.")}</p>
+          <p>{t("There's also the money side, which counts more and more and makes the big clubs win almost every year. Even so, the cool thing about the Champions is that every now and then a small team or a single player decides a match on his own — and that's why we keep watching. It is pure emotion from start to finish, and that is something no other tournament gives us.")}</p>
         </div>
       </motion.div>
 
@@ -150,7 +128,7 @@ const OpinionSection = () => (
               <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
               <div className="absolute bottom-0 left-0 right-0 p-5">
                 <p className="font-heading text-[0.65rem] uppercase tracking-[0.3em] text-neon mb-1">
-                  {c.title}
+                  {t(c.title)}
                 </p>
                 <h4 className="font-display text-2xl text-silver-bright leading-tight">
                   {c.name}
@@ -159,7 +137,7 @@ const OpinionSection = () => (
             </div>
             <div className="p-5">
               <p className="font-body text-sm text-silver leading-relaxed">
-                {c.quote}
+                {t(c.quote)}
               </p>
             </div>
           </motion.article>
@@ -167,6 +145,7 @@ const OpinionSection = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default OpinionSection;

@@ -2,6 +2,7 @@ import { useMemo, useState, useCallback } from "react";
 import { motion } from "framer-motion";
 import { Search, RotateCcw, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+import { useT } from "@/contexts/LanguageContext";
 
 const LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -140,6 +141,7 @@ function buildGrid(level: Level): { grid: Cell[][]; placed: string[] } {
 }
 
 const WordSearchSection = () => {
+  const t = useT();
   const [levelId, setLevelId] = useState<string>(LEVELS[0].id);
   const level = LEVELS.find((l) => l.id === levelId)!;
   const [seed, setSeed] = useState(0);
@@ -226,7 +228,7 @@ const WordSearchSection = () => {
                   : "border-border/50 text-silver-bright hover:border-neon/60 hover:text-neon"
               }`}
             >
-              {l.label}
+              {t(l.label)}
             </button>
           ))}
         </div>
@@ -306,10 +308,10 @@ const WordSearchSection = () => {
             className="glass-card p-6 sm:p-8"
           >
             <h3 className="font-heading text-lg uppercase tracking-[0.25em] text-neon mb-2">
-              {level.label} · Find these legends
+              {t(level.label)} · {t("Find these legends")}
             </h3>
             <p className="font-body text-sm text-silver/80 mb-6">
-              {level.description} Click and drag across the grid to select letters.
+              {t(level.description)} {t("Click and drag across the grid to select letters.")}
             </p>
             <div className="grid grid-cols-2 gap-2 mb-6">
               {placed.map((w) => (
@@ -330,17 +332,17 @@ const WordSearchSection = () => {
               className="inline-flex items-center gap-2 font-heading text-xs uppercase tracking-[0.25em] text-silver-bright hover:text-neon transition-colors"
             >
               <RotateCcw className="h-4 w-4" />
-              New puzzle
+              {t("New puzzle")}
             </button>
 
             <div className="section-divider my-6" />
             <div className="flex items-center justify-between">
               <p className="font-body text-xs text-silver/70">
-                Progress: <span className="text-neon">{found.size}</span> / {placed.length}
+                {t("Progress:")} <span className="text-neon">{found.size}</span> / {placed.length}
               </p>
               {found.size === placed.length && placed.length > 0 && (
                 <span className="inline-flex items-center gap-1 font-heading text-xs uppercase tracking-[0.25em] text-neon">
-                  <Trophy className="h-4 w-4" /> Solved
+                  <Trophy className="h-4 w-4" /> {t("Solved")}
                 </span>
               )}
             </div>

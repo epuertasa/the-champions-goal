@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gamepad2, Eye, Target, Shuffle, RotateCcw, Lightbulb, Check, Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+import { useT } from "@/contexts/LanguageContext";
 import spotDiff from "@/assets/spot-diff-ucl.jpg";
 
 const SHOT_ZONES = [
@@ -61,6 +62,7 @@ const Keeper = ({ diving }: { diving: "left" | "right" | "center" | null }) => {
 };
 
 const FanZoneSection = () => {
+  const t = useT();
   // Spot the difference state
   const [foundDiffs, setFoundDiffs] = useState<number[]>([]);
   const [missClick, setMissClick] = useState<{ x: number; y: number } | null>(null);
@@ -178,24 +180,23 @@ const FanZoneSection = () => {
             <div className="flex items-center gap-2">
               <Target className="h-6 w-6 text-neon" />
               <h3 className="font-heading text-xl uppercase tracking-wider text-silver-bright">
-                Penalty Shootout
+                {t("Penalty Shootout")}
               </h3>
             </div>
             <div className="flex items-center gap-6 font-heading text-sm uppercase tracking-wider">
-              <span className="text-silver">Score: <span className="text-neon">{score}</span></span>
-              <span className="text-silver">Shots: <span className="text-silver-bright">{attempts}</span></span>
+              <span className="text-silver">{t("Score:")} <span className="text-neon">{score}</span></span>
+              <span className="text-silver">{t("Shots:")} <span className="text-silver-bright">{attempts}</span></span>
               <button
                 onClick={resetGame}
                 className="px-4 py-1.5 bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors text-xs"
               >
-                Reset
+                {t("Reset")}
               </button>
             </div>
           </div>
 
           <p className="font-body text-sm text-silver mb-4">
-            Pick a corner of the goal to shoot. The keeper patrols side to side and
-            dives randomly — outguess him to score!
+            {t("Pick a corner of the goal to shoot. The keeper patrols side to side and dives randomly — outguess him to score!")}
           </p>
 
           {/* Pitch + Goal — full width */}
@@ -284,14 +285,14 @@ const FanZoneSection = () => {
                     result === "goal" ? "text-neon" : "text-destructive"
                   }`}
                 >
-                  {result === "goal" ? "GOAL!" : "SAVED!"}
+                  {result === "goal" ? t("GOAL!") : t("SAVED!")}
                 </span>
               </motion.div>
             )}
           </div>
 
           <p className="mt-4 text-xs text-muted-foreground font-body text-center">
-            Click a glowing target inside the goal to shoot!
+            {t("Click a glowing target inside the goal to shoot!")}
           </p>
         </motion.div>
 
@@ -307,23 +308,23 @@ const FanZoneSection = () => {
               <div className="flex items-center gap-2">
                 <Eye className="h-5 w-5 text-neon" />
                 <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
-                  Spot the Difference
+                  {t("Spot the Difference")}
                 </h3>
               </div>
               <div className="flex items-center gap-3 font-heading text-xs uppercase tracking-wider">
                 <span className="text-silver">
-                  Found: <span className="text-neon">{foundDiffs.length}</span>/10
+                  {t("Found:")} <span className="text-neon">{foundDiffs.length}</span>/10
                 </span>
                 <button
                   onClick={resetDiffs}
                   className="px-3 py-1 bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors text-[10px]"
                 >
-                  Reset
+                  {t("Reset")}
                 </button>
               </div>
             </div>
             <p className="font-body text-xs text-silver mb-4">
-              Click on the right image to find the 10 hidden differences between the two scenes.
+              {t("Click on the right image to find the 10 hidden differences between the two scenes.")}
             </p>
             <div
               className="relative glass-card overflow-hidden neon-border flex-1 cursor-crosshair select-none"
@@ -468,13 +469,13 @@ const FanZoneSection = () => {
                   className="absolute inset-0 flex items-center justify-center bg-background/70"
                 >
                   <span className="font-display text-3xl md:text-4xl uppercase tracking-widest text-neon">
-                    All 10 found!
+                    {t("All 10 found!")}
                   </span>
                 </motion.div>
               )}
             </div>
             <p className="mt-3 text-xs text-muted-foreground font-body text-center">
-              Hint: Check the scoreboard, the ad screens, the players & the stadium lights
+              {t("Hint: Check the scoreboard, the ad screens, the players & the stadium lights")}
             </p>
           </motion.div>
 
@@ -556,6 +557,7 @@ const scrambleWord = (w: string) => {
 };
 
 const ScrambledLegends = () => {
+  const t = useT();
   const [difficulty, setDifficulty] = useState<Difficulty>("easy");
   const [roundIdx, setRoundIdx] = useState(0);
   const [solved, setSolved] = useState<number>(0);
@@ -664,15 +666,15 @@ const ScrambledLegends = () => {
         <div className="flex items-center gap-2">
           <Shuffle className="h-5 w-5 text-neon" />
           <h3 className="font-heading text-lg uppercase tracking-wider text-silver-bright">
-            Scrambled Legends
+            {t("Scrambled Legends")}
           </h3>
         </div>
         <div className="flex items-center gap-3 font-heading text-xs uppercase tracking-wider">
           <span className="text-silver">
-            Round <span className="text-neon">{roundIdx + 1}</span>/{playlist.length}
+            {t("Round")} <span className="text-neon">{roundIdx + 1}</span>/{playlist.length}
           </span>
           <span className="text-silver">
-            Solved <span className="text-neon">{solved}</span>
+            {t("Solved")} <span className="text-neon">{solved}</span>
           </span>
         </div>
       </div>
@@ -689,13 +691,13 @@ const ScrambledLegends = () => {
                 : "border-border/50 text-silver hover:border-neon/50 hover:text-neon"
             }`}
           >
-            {d.label}
+            {t(d.label)}
           </button>
         ))}
       </div>
 
       <p className="font-body text-xs text-silver mb-3">
-        Unscramble the legend's name. Click letters to build the answer · click placed letters to remove them.
+        {t("Unscramble the legend's name. Click letters to build the answer · click placed letters to remove them.")}
       </p>
 
       {/* Answer slots */}
@@ -734,7 +736,7 @@ const ScrambledLegends = () => {
               exit={{ opacity: 0 }}
               className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-0.5 rounded-full bg-emerald-500 text-white font-heading text-[10px] uppercase tracking-widest flex items-center gap-1"
             >
-              <Check className="h-3 w-3" /> Correct
+              <Check className="h-3 w-3" /> {t("Correct")}
             </motion.div>
           )}
         </AnimatePresence>
@@ -782,25 +784,25 @@ const ScrambledLegends = () => {
           disabled={hintShown}
           className="inline-flex items-center justify-center gap-1.5 py-2 font-heading text-[10px] uppercase tracking-widest bg-secondary text-silver-bright border border-border rounded hover:border-amber-400/60 hover:text-amber-300 transition-colors disabled:opacity-50"
         >
-          <Lightbulb className="h-3.5 w-3.5" /> Hint
+          <Lightbulb className="h-3.5 w-3.5" /> {t("Hint")}
         </button>
         <button
           onClick={reshuffle}
           className="inline-flex items-center justify-center gap-1.5 py-2 font-heading text-[10px] uppercase tracking-widest bg-secondary text-silver-bright border border-border rounded hover:border-neon/60 hover:text-neon transition-colors"
         >
-          <RotateCcw className="h-3.5 w-3.5" /> Reshuffle
+          <RotateCcw className="h-3.5 w-3.5" /> {t("Reshuffle")}
         </button>
         <button
           onClick={skip}
           className="inline-flex items-center justify-center gap-1.5 py-2 font-heading text-[10px] uppercase tracking-widest bg-primary text-primary-foreground rounded hover:bg-primary/80 transition-colors"
         >
-          Reveal · Skip
+          {t("Reveal · Skip")}
         </button>
       </div>
 
       {solved >= playlist.length && (
         <div className="mt-4 flex items-center justify-center gap-2 font-heading text-xs uppercase tracking-widest text-neon">
-          <Trophy className="h-4 w-4" /> {meta.label} cleared!
+          <Trophy className="h-4 w-4" /> {t(meta.label)} {t("cleared!")}
         </div>
       )}
     </motion.div>

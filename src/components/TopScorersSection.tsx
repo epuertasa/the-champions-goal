@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Trophy } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+import { useT } from "@/contexts/LanguageContext";
 import {
   Table,
   TableBody,
@@ -23,7 +24,9 @@ const scorers = [
   { rank: 10, player: "Andriy Shevchenko", country: "Ukraine", clubs: "Dynamo Kyiv, Milan, Chelsea", goals: 48, apps: 100 },
 ];
 
-const TopScorersSection = () => (
+const TopScorersSection = () => {
+  const t = useT();
+  return (
   <section id="top-scorers" className="py-24 px-6">
     <div className="container mx-auto">
       <SectionHeader
@@ -43,22 +46,22 @@ const TopScorersSection = () => (
           <TableHeader>
             <TableRow className="border-glass-border hover:bg-transparent">
               <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon w-16">
-                #
+                {t("#")}
               </TableHead>
               <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon">
-                Player
+                {t("Player")}
               </TableHead>
               <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon hidden md:table-cell">
-                Country
+                {t("Country")}
               </TableHead>
               <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon hidden lg:table-cell">
-                Clubs
+                {t("Clubs")}
               </TableHead>
               <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon text-right">
-                Goals
+                {t("Goals")}
               </TableHead>
               <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon text-right hidden sm:table-cell">
-                Apps
+                {t("Apps")}
               </TableHead>
             </TableRow>
           </TableHeader>
@@ -93,6 +96,7 @@ const TopScorersSection = () => (
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 export default TopScorersSection;
