@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Crown } from "lucide-react";
 import SectionHeader from "./SectionHeader";
+import { useT } from "@/contexts/LanguageContext";
 import {
   Table,
   TableBody,
@@ -83,7 +84,9 @@ const winners = [
   { season: "2024–25", winner: "Paris Saint-Germain", country: "France", runnerUp: "Inter Milan", score: "5–0" },
 ];
 
-const WinnersSection = () => (
+const WinnersSection = () => {
+  const t = useT();
+  return (
   <section id="winners" className="py-24 px-6">
     <div className="container mx-auto">
       <SectionHeader
@@ -104,19 +107,19 @@ const WinnersSection = () => (
             <TableHeader className="sticky top-0 bg-navy-deep/95 backdrop-blur z-10">
               <TableRow className="border-glass-border hover:bg-transparent">
                 <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon">
-                  Season
+                  {t("Season")}
                 </TableHead>
                 <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon">
-                  Winner
+                  {t("Winner")}
                 </TableHead>
                 <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon hidden md:table-cell">
-                  Country
+                  {t("Country")}
                 </TableHead>
                 <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon hidden sm:table-cell">
-                  Runner-up
+                  {t("Runner-up")}
                 </TableHead>
                 <TableHead className="font-heading text-xs uppercase tracking-[0.2em] text-neon text-right">
-                  Score
+                  {t("Score")}
                 </TableHead>
               </TableRow>
             </TableHeader>
@@ -149,6 +152,7 @@ const WinnersSection = () => (
       </motion.div>
     </div>
   </section>
-);
+  );
+};
 
 export default WinnersSection;
