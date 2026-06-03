@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import { useT } from "@/contexts/LanguageContext";
 
 interface Props {
   label?: string;
@@ -7,7 +8,9 @@ interface Props {
   subtitle?: string;
 }
 
-const SectionBanner = ({ label = "Next Up", title, subtitle }: Props) => (
+const SectionBanner = ({ label = "Next Up", title, subtitle }: Props) => {
+  const t = useT();
+  return (
   <section className="relative py-16 px-6 overflow-hidden">
     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/15 to-transparent" />
     <div className="absolute inset-y-0 left-0 right-0 flex items-center pointer-events-none">
@@ -26,24 +29,25 @@ const SectionBanner = ({ label = "Next Up", title, subtitle }: Props) => (
           <div className="h-px w-12 bg-neon/60" />
           <Star className="h-5 w-5 text-neon" />
           <span className="font-heading text-xs uppercase tracking-[0.4em] text-silver">
-            {label}
+            {t(label)}
           </span>
           <Star className="h-5 w-5 text-neon" />
           <div className="h-px w-12 bg-neon/60" />
         </div>
 
         <h2 className="font-display text-3xl sm:text-4xl md:text-5xl uppercase tracking-[0.05em] text-silver-bright text-3d-neon leading-tight">
-          {title}
+          {t(title)}
         </h2>
 
         {subtitle && (
           <p className="mt-4 font-body text-sm md:text-base text-silver max-w-2xl mx-auto">
-            {subtitle}
+            {t(subtitle)}
           </p>
         )}
       </div>
     </motion.div>
   </section>
-);
+  );
+};
 
 export default SectionBanner;

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import type { LucideIcon } from "lucide-react";
+import { useT } from "@/contexts/LanguageContext";
 
 interface Props {
   icon: LucideIcon;
@@ -7,7 +8,9 @@ interface Props {
   title: string;
 }
 
-const SectionHeader = ({ icon: Icon, label, title }: Props) => (
+const SectionHeader = ({ icon: Icon, label, title }: Props) => {
+  const t = useT();
+  return (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -18,14 +21,15 @@ const SectionHeader = ({ icon: Icon, label, title }: Props) => (
     <div className="flex items-center justify-center gap-2 mb-3">
       <Icon className="h-5 w-5 text-neon" />
       <span className="font-heading text-xs uppercase tracking-[0.3em] text-silver">
-        {label}
+        {t(label)}
       </span>
     </div>
     <h2 className="font-display text-4xl sm:text-5xl md:text-6xl uppercase tracking-[0.04em] text-silver-bright text-3d">
-      {title}
+      {t(title)}
     </h2>
     <div className="section-divider mt-6 mx-auto max-w-xs" />
   </motion.div>
-);
+  );
+};
 
 export default SectionHeader;
