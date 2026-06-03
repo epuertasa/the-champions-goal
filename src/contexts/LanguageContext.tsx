@@ -192,6 +192,7 @@ const dict: Record<string, string> = {
   "Click and drag across the grid to select letters.": "Haz clic y arrastra por la cuadrícula para seleccionar letras.",
   "Round": "Ronda",
   "Language": "Idioma",
+  "cleared!": "¡superado!",
 };
 
 interface Ctx {
